@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking Confirmation</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: url("https://images.unsplash.com/photo-1502920917128-1aa500764b2d?auto=format&fit=crop&w=1600&q=80") 
+        no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #333;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(5px);
+      z-index: 0;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px 40px;
+      border-radius: 18px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+      text-align: center;
+      max-width: 600px;
+      z-index: 1;
+    }
+
+    .success-icon {
+      font-size: 60px;
+      color: #16a34a;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .ticket {
+      text-align: left;
+      background: #f9fafb;
+      border: 1px dashed #bbb;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .ticket h2 {
+      font-size: 1.2rem;
+      color: #1e3a8a;
+      margin-bottom: 15px;
+    }
+    .ticket div {
+      margin: 6px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      background: #1e40af;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #1e3a8a;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="success-icon">✅</div>
+    <h1>Booking Confirmed!</h1>
+    <p>Thank you for booking with us. Your e-ticket details are below:</p>
+
+    <div class="ticket">
+      <h2>✈ Flight Details</h2>
+      <div><strong>Airline:</strong> <span id="airline">-</span></div>
+      <div><strong>Route:</strong> <span id="route">-</span></div>
+      <div><strong>Flight Code:</strong> <span id="code">-</span></div>
+      <div><strong>Departure:</strong> <span id="dep">-</span></div>
+      <div><strong>Arrival:</strong> <span id="arr">-</span></div>
+      <div><strong>Passengers:</strong> <span id="paxCount">0</span></div>
+      <div><strong>Total Paid:</strong> <span id="total">₹0</span></div>
+    </div>
+
+    <a href="index.html" class="btn">Back to Home</a>
+  </div>
+  
+<script>
+  // ✅ Get all booking + payment details from localStorage
+  const bookingData = JSON.parse(localStorage.getItem("bookingData")) || {};
+
+  document.getElementById("airline").textContent = bookingData.airline || "-";
+  document.getElementById("route").textContent = bookingData.route || "-";
+  document.getElementById("code").textContent = bookingData.flightCode || "-";  // fixed
+  document.getElementById("dep").textContent = bookingData.depTime || "-";      // fixed
+  document.getElementById("arr").textContent = bookingData.arrTime || "-";      // fixed
+  document.getElementById("paxCount").textContent = bookingData.passengers ? bookingData.passengers.length : 0;
+  document.getElementById("total").textContent = "₹" + (bookingData.total || 0);
+  
+</script>
+
+</body>
+</html>  

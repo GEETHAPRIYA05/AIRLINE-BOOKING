@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  padding-top: 200px; 
+}
+
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 20px;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-left .logo {
+  width: 200px;
+  height: auto;
+}
+
+.nav-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-item {
+  cursor: pointer;
+  position: relative;
+  font-size: large;
+  color: black;
+}
+
+.nav-item:hover {
+  color: red;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 40px;
+  background-color: white;
+  color: black;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  min-width: 180px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 100;
+  text-decoration: none;
+}
+
+.dropdown div {
+  padding: 10px 15px;
+  cursor: pointer;
+ 
+}
+
+.dropdown div:hover {
+  background-color: #f5f5f5;
+}
+
+.nav-item .dropdown {
+  right: 0;
+}
+
+ .drop{
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-direction: column 
+ }
+ .drop a{
+  display: block;
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+ }
+ .drop div:hover {
+  background-color: grey;
+  border-radius: 4px;
+}
+.hero-section {
+  background: url("page 2 bc.jpg");
+  font-family: sans-serif;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top:fixed; 
+}
+
+.overlay {
+  background-color: rgba(0, 0, 50, 0.5);
+  color: white;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.search-panel {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  color: black;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.search-panel input[type="text"],
+.search-panel input[type="date"],
+.search-panel select {
+  width: 220px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin: 8px 5px;
+}
+
+input[placeholder="From"],
+input[placeholder="To"] {
+  width: 250px;
+}
+
+.search-panel .search-btn {
+  background-color: #1E90FF;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.5s;
+  margin: 8px 5px;
+}
+.search-btn:hover{
+  background-color: grey;
+  color: #1E90FF;
+  
+}
+.check-group {
+  margin-top: 10px;
+}
+
+
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-container">
+      <div class="nav-left">
+        <img src="logo 2.png" alt="Logo" class="logo">  
+      </div>
+      <div class="nav-right">
+        <div class="nav-item" id="currencySelector">
+          INR
+          <div class="dropdown" id="currencyDropdown">
+            <div>INR - ₹</div>
+            <div>USD - $</div>
+            <div>EUR - €</div>
+            <div>GBP - £</div>
+            <div>JPY - ¥</div>
+            <div>AUD - A$</div>
+            <div>CAD - C$</div>
+            <div>CHF - CHF</div>
+            <div>CNY - ¥</div>
+            <div>SGD - S$</div>
+            <div>HKD - HK$</div>
+            <div>NZD - NZ$</div>
+            <div>ZAR - R</div>
+            <div>SEK - kr</div>
+            <div>NOK - kr</div>
+            <div>DKK - kr</div>
+            <div>RUB - ₽</div>
+            <div>MXN - $</div>
+            <div>BRL - R$</div>
+            <div>IDR - Rp</div>
+            <div>KRW - ₩</div>
+            <div>TRY - ₺</div>
+            <div>THB - ฿</div>
+            <div>PLN - zł</div>
+            <div>TWD - NT$</div>
+            <div>MYR - RM</div>
+            <div>SAR - ﷼</div>
+            <div>AED - د.إ</div>
+            <div>ILS - ₪</div>
+            <div>ARS - $</div>
+            <div>CLP - $</div>
+            <div>COP - $</div>
+            <div>EGP - £</div>
+            <div>PKR - ₨</div>
+            <div>BDT - ৳</div>
+            <div>LKR - Rs</div>
+            <div>NGN - ₦</div>
+            <div>KES - KSh</div>
+            <div>VND - ₫</div>
+            <div>UAH - ₴</div>
+            <div>QAR - ﷼</div>
+            <div>KWD - د.ك</div>
+            <div>OMR - ﷼</div>
+            <div>BHD - .د.ب</div>
+          </div>
+        </div>
+
+        <div class="nav-item" id="languageSelector">
+          EN
+          <div class="dropdown" id="languageDropdown">
+            <div>English (EN)</div>
+            <div>Hindi (HI)</div>
+            <div>Spanish (ES)</div>
+            <div>French (FR)</div>
+            <div>German (DE)</div>
+            <div>Chinese (ZH)</div>
+            <div>Japanese (JA)</div>
+            <div>Korean (KO)</div>
+            <div>Portuguese (PT)</div>
+            <div>Russian (RU)</div>
+            <div>Arabic (AR)</div>
+            <div>Bengali (BN)</div>
+            <div>Urdu (UR)</div>
+            <div>Turkish (TR)</div>
+            <div>Italian (IT)</div>
+            <div>Vietnamese (VI)</div>
+            <div>Thai (TH)</div>
+            <div>Indonesian (ID)</div>
+            <div>Malay (MS)</div>
+            <div>Persian (FA)</div>
+            <div>Polish (PL)</div>
+            <div>Ukrainian (UK)</div>
+            <div>Hebrew (HE)</div>
+            <div>Greek (EL)</div>
+            <div>Dutch (NL)</div>
+            <div>Swedish (SV)</div>
+            <div>Finnish (FI)</div>
+            <div>Danish (DA)</div>
+           <div>Norwegian (NO)</div>
+           <div>Hungarian (HU)</div>
+           <div>Czech (CS)</div>
+           <div>Romanian (RO)</div>
+           <div>Slovak (SK)</div>
+           <div>Bulgarian (BG)</div>
+           <div>Serbian (SR)</div>
+           <div>Croatian (HR)</div>
+           <div>Filipino (TL)</div>
+           <div>Swahili (SW)</div>
+           <div>Tamil (TA)</div>
+           <div>Telugu (TE)</div>
+           <div>Kannada (KN)</div>
+          </div>
+        </div>
+
+        <div class="nav-item" id="supportSelector">
+          Support
+          <div class="dropdown" id="supportDropdown">
+            <div>Help Center</div>
+            <div>Contact Us</div>
+            <div>FAQs</div>
+            <div>Live Chat</div>
+          </div>
+        </div>
+ <div class="nav-item" id="loginSelector">
+  PROFILE
+          <div class="dropdown" id="loginDropdown"> 
+        <div class="drop">    
+  <div ><a href="http://127.0.0.1:5500/login.html">LOGIN </a></div>
+  <div><a href="http://127.0.0.1:5500/sigin.html">SIGN IN</a></div>
+   <div><a href="http://127.0.0.1:5500/signup.html">SIGN UP</a></div>
+</div> 
+
+          </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div
+  </div>
+  <div class="hero-section">
+    <div class="overlay">
+      <h1>life is Short,Buy the tickets!</h1>
+      <h2> don't dream it,Just Create a Multi-city route</h2>
+  
+      <div class="search-panel">
+        <form>
+          <div>
+            <label><input type="radio" name="trip" checked> Return</label>
+            <label><input type="radio" name="trip"> One way</label>
+            <label><input type="radio" name="trip"> Multi-city</label>
+          </div>
+          <input type="text" placeholder="From">
+          <button type="button" style="border-radius: 50%; border: 1px solid white; padding: 10px;">⇄</button>
+          <input type="text" placeholder="To">
+          <input type="date">
+          <input type="date">
+          <select>
+            <option>1 adult, Economy</option>
+          </select>
+          <button class="search-btn">Search</button>
+          <div class="check-group">
+            <label><input type="checkbox"> Add nearby airports</label>
+            <label><input type="checkbox"> Direct flights only</label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    const toggleDropdown = (selectorId, dropdownId) => {
+      const selector = document.getElementById(selectorId);
+      const dropdown = document.getElementById(dropdownId);
+  
+      selector.addEventListener('click', () => {
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      });
+  
+      window.addEventListener('click', (e) => {
+        if (!selector.contains(e.target)) {
+          dropdown.style.display = 'none';
+        }
+      });
+    };
+  
+    toggleDropdown('currencySelector', 'currencyDropdown');
+    toggleDropdown('languageSelector', 'languageDropdown');
+    toggleDropdown('supportSelector', 'supportDropdown');
+    toggleDropdown('loginSelector', 'loginDropdown');
+  </script>
+</body>
+</html>

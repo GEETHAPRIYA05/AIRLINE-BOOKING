@@ -1,0 +1,94 @@
+
+<style>
+    body{
+        text-align: center;
+        background-color: black;
+        color: white;
+    }
+   h1{
+    font-weight: 400;
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+    color: red;
+   }
+   h2{
+    font-weight: 800;
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+    color:red;
+   }
+   h3{
+    font-weight: 600;
+   }
+   p1{
+    font-weight: 400;
+    font-style: italic;
+   }
+   p{
+    text-align: left;
+    font-weight: 200;
+    font-style: normal;
+    font-family: 'Times New Roman', Times, serif;
+   }
+   
+   .con{
+    display: flex;
+    justify-content: space-between;
+   }
+   .left 
+   {
+    width: 50%;
+   }
+   .right
+   {
+    width: 50%;
+   }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>STEAL THE</h1>
+    <h2>SPOTLIGHT</h2>
+    <h3>Stand out from the masses and increase your adds of playing football at the next level<BR>
+        RONALDO CR7
+    </h3>
+    <img src="https://m.media-amazon.com/images/I/81eSkgnULzL._AC_UF1000,1000_QL80_.jpg" alt="ronaldo" width="300" height="250">
+    <div class="con">
+    <section class="left"> <p>FULL NAME:Cristanio Ronaldo</p>
+        <p>BORN:5 Februaru 1985(age 40 years)</p>
+        <p>PARENTS:Jose dinis averio,maira dolores dos Santos viveiros da Averio</p>
+        <p>CHILDREN:Angel dos santos averio</p>
+        <p>HEIGHT:1.89m</p>
+        <p>Current teams: Al-Nassr FC (#7 / Forward), Portugal national football team (#7 / Forward)</>
+        <p>Dates joined: 2023 (Al-Nassr FC), 2021 (Manchester United F.C.) · </p>
+    </section>
+    <section class="right"> <p>PLAYER PROFILE<BR>
+        A versatile attacker, Ronaldo is capable of playing on either wing as well as through the centre of the pitch,[246] and, while ostensibly right-footed, is very strong with both feet.[247] Tactically, Ronaldo has undergone several evolutions throughout his career. While at Sporting and during his first season at Manchester United, he was typically deployed as a traditional winger on the right side of midfield, where he regularly looked to deliver crosses into the penalty area. In this position, he was able to use his pace and acceleration, agility and technical skills to take on opponents in one-on-one situations. Ronaldo became noted for his dribbling and flair, often displaying an array of tricks and feints,[248][249] such as the step overs and so-called 'chops' that became his trademark;[250] he has also been known to use the flip-flap</p>
+    </section>
+</div>
+</div>
+</body>
+</html>
+ul{
+    list-style: none;
+    margin: 0%;
+    padding: 0%;
+    overflow: hidden;
+    
+}
+li{
+    float: right;
+    font-weight: 30px;
+    
+}
+li a{
+    text-decoration: none;
+    text-align: center;
+    display:  block;
+    color:black;
+    padding: 14px 16px;
+    
+}
+li a:hover{
+    color: red;
+}

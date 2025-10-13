@@ -1,0 +1,108 @@
+@import url();
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+  color: white;
+  border-radius: 8px;
+}
+
+
+  .signup-con {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .signup-con h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+  }
+
+  .signup-con input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .signup-con button {
+    width: 100%;
+    padding: 12px;
+    background-color: #66D2CE;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .signup-con .btm {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+  }
+
+  .signup-con .btm a {
+    color:#66D2CE;
+    text-decoration: none;
+  }
+
+  .separator {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .separator::before, .separator::after {
+    content: " ";
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .separator:not(:empty)::before {
+    margin-right: .75em;
+  }
+
+  .separator:not(:empty)::after {
+    margin-left: .75em;
+  }
+
+  .google-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .google-btn img {
+    width: 20px;
+    margin-right: 10px;
+  }

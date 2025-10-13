@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Flights</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: #f4f7fa;
+      padding: 30px;
+    }
+
+    header {
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      padding: 20px;
+      background-color: #1e3a8a;
+      color: white;
+      font-size: 32px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .flights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .flight-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s;
+    }
+
+    .flight-card:hover {
+      transform: scale(1.02);
+    }
+
+    .flight-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .flight-route {
+      color: #333;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    .flight-time {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .price {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #1e3a8a;
+      font-weight: bold;
+    }
+
+    .book-btn {
+      margin-top: 15px;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .book-btn:hover {
+      background-color: #1e40af;
+    }
+  </style>
+</head>
+<body>
+
+  <header>Available Flights</header>
+
+  <section class="flights-grid">
+    <div class="flight-card">
+      <div class="flight-top">
+        <span>IndiGo</span>
+        <span>6E 120</span>
+      </div>
+      <div class="flight-route">Chennai → Delhi</div>
+      <div class="flight-time">08:00 AM - 10:45 AM</div>
+      <div class="price">₹4,599</div>
+      <button class="book-btn">Book Now</button>
+    </div>
+
+    <div class="flight-card">
+      <div class="flight-top">
+        <span>SpiceJet</span>
+        <span>SG 409</span>
+      </div>
+      <div class="flight-route">Chennai → Bangalore</div>
+      <div class="flight-time">06:45 AM - 08:00 AM</div>
+      <div class="price">₹2,799</div>
+      <button class="book-btn">Book Now</button>
+    </div>
+
+    <div class="flight-card">
+      <div class="flight-top">
+        <span>Air India</span>
+        <span>AI 503</span>
+      </div>
+      <div class="flight-route">Chennai → Mumbai</div>
+      <div class="flight-time">09:30 AM - 11:45 AM</div>
+      <div class="price">₹3,999</div>
+      <button class="book-btn">Book Now</button>
+    </div>
+
+    <div class="flight-card">
+      <div class="flight-top">
+        <span>Vistara</span>
+        <span>UK 827</span>
+      </div>
+      <div class="flight-route">Chennai → Hyderabad</div>
+      <div class="flight-time">07:15 AM - 08:20 AM</div>
+      <div class="price">₹3,499</div>
+      <button class="book-btn">Book Now</button>
+    </div>
+    <div class="flight-card">
+  <div class="flight-top">
+    <span>IndiGo</span>
+    <span>6E 456</span>
+  </div>
+  <div class="flight-route">Chennai → Kolkata</div>
+  <div class="flight-time">05:30 AM - 08:45 AM</div>
+  <div class="price">₹4,150</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>AirAsia</span>
+    <span>I5 332</span>
+  </div>
+  <div class="flight-route">Chennai → Goa</div>
+  <div class="flight-time">06:50 AM - 08:40 AM</div>
+  <div class="price">₹3,299</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>SpiceJet</span>
+    <span>SG 221</span>
+  </div>
+  <div class="flight-route">Chennai → Pune</div>
+  <div class="flight-time">07:15 AM - 09:30 AM</div>
+  <div class="price">₹3,750</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Vistara</span>
+    <span>UK 524</span>
+  </div>
+  <div class="flight-route">Chennai → Ahmedabad</div>
+  <div class="flight-time">10:00 AM - 12:45 PM</div>
+  <div class="price">₹4,899</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Air India</span>
+    <span>AI 145</span>
+  </div>
+  <div class="flight-route">Chennai → Trivandrum</div>
+  <div class="flight-time">01:15 PM - 02:45 PM</div>
+ <div class="price">₹4,899</div>
+  <button class="book-btn">Book Now</button>
+</div>
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Emirates</span>
+    <span>EK 543</span>
+  </div>
+  <div class="flight-route">Chennai → Dubai</div>
+  <div class="flight-time">09:00 AM - 12:00 PM</div>
+  <div class="price">₹18,999</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Singapore Airlines</span>
+    <span>SQ 529</span>
+  </div>
+  <div class="flight-route">Chennai → Singapore</div>
+  <div class="flight-time">11:30 AM - 06:10 PM</div>
+  <div class="price">₹21,250</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Qatar Airways</span>
+    <span>QR 529</span>
+  </div>
+  <div class="flight-route">Chennai → Doha</div>
+  <div class="flight-time">04:00 AM - 06:45 AM</div>
+  <div class="price">₹17,850</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Air France</span>
+    <span>AF 679</span>
+  </div>
+  <div class="flight-route">Chennai → Paris</div>
+  <div class="flight-time">01:10 AM - 07:45 AM</div>
+  <div class="price">₹34,999</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Lufthansa</span>
+    <span>LH 759</span>
+  </div>
+  <div class="flight-route">Chennai → Frankfurt</div>
+  <div class="flight-time">02:45 AM - 08:20 AM</div>
+  <div class="price">₹36,200</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>British Airways</span>
+    <span>BA 36</span>
+  </div>
+  <div class="flight-route">Chennai → London</div>
+  <div class="flight-time">07:15 AM - 01:30 PM</div>
+  <div class="price">₹42,500</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Turkish Airlines</span>
+    <span>TK 949</span>
+  </div>
+  <div class="flight-route">Chennai → Istanbul</div>
+  <div class="flight-time">06:50 AM - 11:55 AM</div>
+  <div class="price">₹29,700</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>Etihad</span>
+    <span>EY 239</span>
+  </div>
+  <div class="flight-route">Chennai → Abu Dhabi</div>
+  <div class="flight-time">03:15 AM - 06:30 AM</div>
+  <div class="price">₹19,499</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>United Airlines</span>
+    <span>UA 82</span>
+  </div>
+  <div class="flight-route">Chennai → New York</div>
+  <div class="flight-time">01:30 AM - 11:15 AM (next day)</div>
+  <div class="price">₹62,000</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+<div class="flight-card">
+  <div class="flight-top">
+    <span>ANA</span>
+    <span>NH 826</span>
+  </div>
+  <div class="flight-route">Chennai → Tokyo</div>
+  <div class="flight-time">10:00 AM - 09:30 PM</div>
+  <div class="price">₹54,800</div>
+  <button class="book-btn">Book Now</button>
+</div>
+
+  </section>
+<script>
+  // Attach event listeners to all Book Now buttons
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".book-btn").forEach(button => {
+      button.addEventListener("click", (e) => {
+        const card = e.target.closest(".flight-card");
+
+        // Get flight details
+        const airline = card.querySelector(".flight-top span:first-child").textContent;
+        const flightNo = card.querySelector(".flight-top span:last-child").textContent;
+        const route = card.querySelector(".flight-route").textContent;
+        const time = card.querySelector(".flight-time").textContent;
+        const price = card.querySelector(".price").textContent;
+
+        // Redirect to payment.html with details
+        const url = `payment1.html?airline=${encodeURIComponent(airline)}&flightNo=${encodeURIComponent(flightNo)}&route=${encodeURIComponent(route)}&time=${encodeURIComponent(time)}&price=${encodeURIComponent(price)}`;
+        window.location.href = url;
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

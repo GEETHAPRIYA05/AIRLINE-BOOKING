@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+            input{
+                accent-color: red;
+            }
+        </style>
+        
+    </head>
+    <body>
+        <form action="abc.php" method="get">
+            gender:<br>
+            <input type="radio" name="male" value:"male">male<br>
+            <input type="radio" name="female" value:"female">female<br>
+            <input type="radio" name="others" value:"others">others<br>
+        </form>
+    </body>
+</html>

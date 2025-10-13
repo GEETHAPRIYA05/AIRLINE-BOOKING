@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Skywinga</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+ font-family: 'times new roman';
+}
+body {
+  background: url("airplane.png") no-repeat center center/cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 150px;
+}
+.nav {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  z-index: 1000;
+}
+.nav a {
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  color: #000;
+  cursor: pointer;
+}
+.nav .signup {
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+.dropdown {
+  position: relative;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  max-height: 300px;
+  overflow-y: auto;
+  min-width: 180px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  top: 35px;
+  left: 0;
+  z-index: 999;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content a {
+  display: block;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #000;
+}
+.dropdown-content a:hover {
+  background-color: #f3f4f6;
+}
+.container {
+  margin-left: auto;
+  margin-right: 40px;
+  margin-top: 40px;
+  margin-bottom: auto;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+}
+.right h1 {
+  font-size: 42px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #1f2937;
+  margin-bottom: 16px;
+  white-space: pre-line; /* allow \n in translations */
+}
+.right p {
+  font-size: 32px;
+  color: green;
+  margin-bottom: 24px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: rgba(0, 0, 0, 0.35);
+  padding: 16px 20px;
+  border-radius: 16px;
+  margin: 30px auto;
+  max-width: 1100px;
+  width: fit-content;
+  position: relative;
+  top: -80px;
+}
+.search-row input,
+.search-row select,
+.search-row button {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  flex: 1;
+  min-width: 140px;
+}
+.search-row .swap-icon {
+  font-size: 20px;
+  padding: 0 8px;
+  color: white;
+  flex: 0;
+}
+.search-row button {
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  flex: 0;
+}
+.search-row button:hover {
+  background-color: #008fcc;
+}
+.language-dropdown > a {
+  font-weight: 500;
+  padding: 6px 12px;
+  color: #000;
+  cursor: pointer;
+}
+/* ============================
+   Responsive Media Queries
+============================ */
+
+/* Tablets and small laptops (≤ 1024px) */
+@media (max-width: 1024px) {
+  .right h1 {
+    font-size: 36px;
+  }
+  .right p {
+    font-size: 26px;
+  }
+  .search-row {
+    max-width: 90%;
+    flex-wrap: wrap;
+  }
+  .search-row input,
+  .search-row select {
+    flex: 1 1 45%;
+  }
+}
+/* Tablets (≤ 768px) */
+@media (max-width: 768px) {
+  .nav {
+    position: static;
+    transform: none;
+    margin: 10px auto;
+    flex-wrap: wrap;
+  }
+  .logo {
+    position: static;
+    margin: 10px auto;
+    display: block;
+  }
+  .container {
+    margin: 20px auto;
+    padding: 20px;
+    text-align: center;
+  }
+  .right h1 {
+    font-size: 28px;
+  }
+  .right p {
+    font-size: 20px;
+  }
+  .search-row {
+    flex-direction: column;
+    gap: 10px;
+    top: 0;
+  }
+  .search-row input,
+  .search-row select,
+  .search-row button {
+    width: 100%;
+    flex: none;
+  }
+}
+/* Mobile Phones (≤ 480px) */
+@media (max-width: 480px) {
+  .nav {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .right h1 {
+    font-size: 22px;
+  }
+  .right p {
+    font-size: 16px;
+  }
+  .search-row {
+    padding: 12px 16px;
+    border-radius: 12px;
+  }
+  .search-row input,
+  .search-row select,
+  .search-row button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <img src="logo 2.png" alt="Logo" class="logo">
+  <!-- Navigation -->
+  <div class="nav">
+    <!-- INR Dropdown -->
+    <div class="dropdown">
+      <a href="#">INR ▾</a>
+      <div class="dropdown-content">
+        <a href="#">Indian Rupee (INR)</a>
+        <a href="#">US Dollar (USD)</a>
+        <a href="#">Euro (EUR)</a>
+        <a href="#">British Pound (GBP)</a>
+        <a href="#">Japanese Yen (JPY)</a>
+        <a href="#">Swiss Franc (CHF)</a>
+        <a href="#">Australian Dollar (AUD)</a>
+        <a href="#">Canadian Dollar (CAD)</a>
+        <a href="#">Singapore Dollar (SGD)</a>
+        <a href="#">New Zealand Dollar (NZD)</a>
+        <a href="#">Chinese Yuan (CNY)</a>
+        <a href="#">Hong Kong Dollar (HKD)</a>
+        <a href="#">Thai Baht (THB)</a>
+        <a href="#">South Korean Won (KRW)</a>
+        <a href="#">UAE Dirham (AED)</a>
+        <a href="#">Saudi Riyal (SAR)</a>
+        <a href="#">Russian Ruble (RUB)</a>
+        <a href="#">Brazilian Real (BRL)</a>
+        <a href="#">South African Rand (ZAR)</a>
+        <a href="#">Philippine Peso (PHP)</a>
+        <a href="#">Malaysian Ringgit (MYR)</a>
+        <a href="#">Indonesian Rupiah (IDR)</a>
+        <a href="#">Vietnamese Dong (VND)</a>
+      </div>
+    </div>
+    <!-- Language Dropdown -->
+    <div class="dropdown language-dropdown">
+      <a href="#">🌐 EN ▾</a>
+      <div class="dropdown-content">
+        <a href="#" data-lang="en">English</a>
+        <a href="#" data-lang="hi">हिन्दी</a>
+        <a href="#" data-lang="ta">தமிழ்</a>
+        <a href="#" data-lang="te">తెలుగు</a>
+        <a href="#" data-lang="ml">മലയാളം</a>
+        <a href="#" data-lang="kn">ಕನ್ನಡ</a>
+        <a href="#" data-lang="fr">Français</a>
+        <a href="#" data-lang="de">Deutsch</a>
+        <a href="#" data-lang="es">Español</a>
+        <a href="#" data-lang="ar">العربية</a>
+        <a href="#" data-lang="fr">Français</a>
+    <a href="#" data-lang="pt">Português</a>
+    <a href="#" data-lang="ru">Русский</a>
+    <a href="#" data-lang="ja">日本語</a>
+    <a href="#" data-lang="zh-CN">中文(简体)</a>
+    <a href="#" data-lang="zh-TW">中文(繁體)</a>
+    <a href="#" data-lang="ko">한국어</a>
+    <a href="#" data-lang="it">Italiano</a>
+    <a href="#" data-lang="nl">Nederlands</a>
+    <a href="#" data-lang="sv">Svenska</a>
+    <a href="#" data-lang="no">Norsk</a>
+    <a href="#" data-lang="fi">Suomi</a>
+    <a href="#" data-lang="da">Dansk</a>
+    <a href="#" data-lang="pl">Polski</a>
+    <a href="#" data-lang="tr">Türkçe</a>
+    <a href="#" data-lang="vi">Tiếng Việt</a>
+    <a href="#" data-lang="th">ไทย</a>
+    <a href="#" data-lang="id">Bahasa Indonesia</a>
+    <a href="#" data-lang="bn">বাংলা</a>
+    <a href="#" data-lang="pa">ਪੰਜਾਬੀ</a>
+    <a href="#" data-lang="gu">ગુજરાતી</a>
+    <a href="#" data-lang="mr">मराठी</a>
+    <a href="#" data-lang="si">සිංහල</a>
+    <a href="#" data-lang="my">မြန်မာ</a>
+    <a href="#" data-lang="km">ខ្មែរ</a>
+    <a href="#" data-lang="lo">ລາວ</a>
+    <a href="#" data-lang="fa">فارسی</a>
+    <a href="#" data-lang="ur">اردو</a>
+    <a href="#" data-lang="he">עברית</a>
+    <a href="#" data-lang="el">Ελληνικά</a>
+    <a href="#" data-lang="hu">Magyar</a>
+    <a href="#" data-lang="cs">Čeština</a>
+    <a href="#" data-lang="sk">Slovenčina</a>
+    <a href="#" data-lang="sl">Slovenščina</a>
+    <a href="#" data-lang="hr">Hrvatski</a>
+    <a href="#" data-lang="sr">Српски</a>
+    <a href="#" data-lang="bg">Български</a>
+    <a href="#" data-lang="ro">Română</a>
+    <a href="#" data-lang="et">Eesti</a>
+    <a href="#" data-lang="lv">Latviešu</a>
+    <a href="#" data-lang="lt">Lietuvių</a>
+        <!-- Add more languages as needed -->
+      </div>
+    </div>
+    <a href="offer.html">Offers</a>
+    <a href="seats.html">Seats</a>
+    <a href="checkin.html">Check in</a>
+    <a href="signup.html" class="signup">Sign Up</a>
+  </div>
+  <!-- Form Container -->
+  <div class="container">
+    <div class="right">
+      <h1 id="bookNow">Book Now Wander Always!!</h1>
+      <p id="tagline">Turn Miles into memories</p>
+    </div>
+  </div>
+  <div class="search-row">
+    <input type="text" id="from" placeholder="📍From" required>
+    <span class="swap-icon">⇄</span>
+    <input type="text" id="to" placeholder="📍To" required>
+    <input type="date" id="depart">
+    <input type="date" id="return">
+    <select id="passengers">
+      <option>1 adult, Economy</option>
+      <option>2 adults, Economy</option>
+      <option>1 adult, Business</option>
+    </select>
+    <button id="searchBtn">Search</button>
+  </div>
+  <script>
+    // Go to tickets
+    document.getElementById('searchBtn').addEventListener('click', function() {
+      const from = document.getElementById('from').value.trim();
+      const to = document.getElementById('to').value.trim();
+      if (!from || !to) {
+        alert("Please enter both cities.");
+        return;
+      }
+      window.location.href = `book.html?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
+    });
+
+    // Translation object
+    const translations = {
+      en: {
+        bookNow: "Book Now,\nWander Always!!",
+        tagline: "Turn Miles into memories",
+        from: "📍From",
+        to: "📍To",
+        depart: "Depart",
+        return: "Return",
+        search: "Search",
+        offers: "Offers",
+        seats: "Seats",
+        checkin: "Check in",
+        signup: "Sign Up"
+      },
+      hi: {
+        bookNow: "अब बुक करें,\nहमेशा यात्रा करें!!",
+        tagline: "मील को यादों में बदलें",
+        from: "📍कहाँ से",
+        to: "📍कहाँ तक",
+        depart: "प्रस्थान",
+        return: "वापसी",
+        search: "खोजें",
+        offers: "ऑफ़र",
+        seats: "सीटें",
+        checkin: "चेक-इन",
+        signup: "साइन अप"
+      },
+      ta: {
+        bookNow: "இப்போது பதிவு செய்க,\nஎப்போதும் பயணம் செய்க!!",
+        tagline: "மைல்கள் நினைவுகளாக மாறும்",
+        from: "📍இருந்து",
+        to: "📍வரை",
+        depart: "புறப்பாடு",
+        return: "மீண்டும் வருகை",
+        search: "தேடுக",
+        offers: "சலுகைகள்",
+        seats: "இடங்கள்",
+        checkin: "சேக்-இன்",
+        signup: "சைன் அப்"
+      },
+            te: {
+        bookNow: "ఇప్పుడు బుక్ చేయండి,\nఎల్లప్పుడూ ప్రయాణించండి!!",
+        tagline: "మైల్స్ ను జ్ఞాపకాలుగా మార్చండి",
+        from: "📍ఎక్కడి నుండి",
+        to: "📍ఎక్కడికి",
+        depart: "ప్రయాణం",
+        return: "వాపస్",
+        search: "శోధించు",
+        offers: "ఆఫర్లు",
+        seats: "సీట్లు",
+        checkin: "చెక్-ఇన్",
+        signup: "సైన్ అప్"
+      },
+      ml: {
+        bookNow: "ഇപ്പോൾ ബുക്ക് ചെയ്യുക,\nഎപ്പോഴും യാത്ര ചെയ്യുക!!",
+        tagline: "മൈലുകൾ ഓർമ്മകളായി മാറ്റുക",
+        from: "📍എവിടെ നിന്നും",
+        to: "📍എവിടെ വരെ",
+        depart: "പുറപ്പാട്",
+        return: "തിരിച്ചു വരുക",
+        search: "തിരയുക",
+        offers: "ഓഫറുകൾ",
+        seats: "സീറ്റുകൾ",
+        checkin: "ചെക്ക്-ഇൻ",
+        signup: "സൈൻ അപ്പ്"
+      },
+      kn: {
+        bookNow: "ಈಗ ಬುಕ್ ಮಾಡಿ,\nಯಾವಾಗಲೂ ಪ್ರವಾಸ ಮಾಡಿರಿ!!",
+        tagline: "ಮೈಲ್ಗಳನ್ನು ಸ್ಮರಣಿಕೆಗಳಿಗೆ ಪರಿವರ್ತಿಸಿ",
+        from: "📍ಎಲ್ಲಿ ರಿಂದ",
+        to: "📍ಎಲ್ಲಿ ವರೆಗೆ",
+        depart: "ಪ್ರस्थान",
+        return: "ಹಿಂತಿರುಗಿ",
+        search: "ಹುಡುಕಿ",
+        offers: "ಆಫರ್ ಗಳು",
+        seats: "ಆಸನಗಳು",
+        checkin: "ಚೆಕ್ ಇನ್",
+        signup: "ಸೈನ್ ಅಪ್"
+      },
+      fr: {
+        bookNow: "Réservez maintenant,\nVoyagez toujours!!",
+        tagline: "Transformez les miles en souvenirs",
+        from: "📍De",
+        to: "📍À",
+        depart: "Départ",
+        return: "Retour",
+        search: "Rechercher",
+        offers: "Offres",
+        seats: "Sièges",
+        checkin: "Enregistrement",
+        signup: "S'inscrire"
+      },
+      de: {
+        bookNow: "Jetzt buchen,\nImmer reisen!!",
+        tagline: "Meilen in Erinnerungen verwandeln",
+        from: "📍Von",
+        to: "📍Nach",
+        depart: "Abflug",
+        return: "Rückkehr",
+        search: "Suchen",
+        offers: "Angebote",
+        seats: "Sitze",
+        checkin: "Check-in",
+        signup: "Anmelden"
+      },
+      es: {
+        bookNow: "Reserva ahora,\n¡Viaja siempre!!",
+        tagline: "Convierte millas en recuerdos",
+                from: "📍De",
+        to: "📍A",
+        depart: "Salida",
+        return: "Regreso",
+        search: "Buscar",
+        offers: "Ofertas",
+        seats: "Asientos",
+        checkin: "Registro",
+        signup: "Registrarse"
+      },
+      ar: {
+        bookNow: "احجز الآن،\nسافر دائمًا!!",
+        tagline: "حوّل الأميال إلى ذكريات",
+        from: "📍من",
+        to: "📍إلى",
+        depart: "المغادرة",
+        return: "العودة",
+        search: "بحث",
+        offers: "عروض",
+        seats: "المقاعد",
+        checkin: "تسجيل الوصول",
+        signup: "اشتراك"
+      }
+    };
+
+    // Set page language
+    function setLanguage(lang) {
+      if (!translations[lang]) return;
+      document.getElementById('bookNow').innerText = translations[lang].bookNow;
+      document.getElementById('tagline').innerText = translations[lang].tagline;
+      document.getElementById('from').placeholder = translations[lang].from;
+      document.getElementById('to').placeholder = translations[lang].to;
+      document.getElementById('depart').placeholder = translations[lang].depart;
+      document.getElementById('return').placeholder = translations[lang].return;
+      document.getElementById('searchBtn').innerText = translations[lang].search;
+      document.querySelector('a[href="offer.html"]').innerText = translations[lang].offers;
+      document.querySelector('a[href="seats.html"]').innerText = translations[lang].seats;
+      document.querySelector('a[href="checkin.html"]').innerText = translations[lang].checkin;
+      document.querySelector('.signup').innerText = translations[lang].signup;
+    }
+    // Language dropdown handler
+    document.querySelectorAll('.language-dropdown .dropdown-content a').forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        const lang = this.getAttribute('data-lang');
+        document.querySelector('.language-dropdown > a').textContent = `🌐 ${this.textContent} ▾`;
+        setLanguage(lang);
+      });
+    });
+  </script>
+</body>
+</html>

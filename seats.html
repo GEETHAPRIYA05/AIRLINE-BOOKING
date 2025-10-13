@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Professional Flight Seat Booking — Demo</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+  :root{
+    --bg1: #eef6ff;
+    --bg2: #f7fbff;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --accent: #0052cc;
+    --accent-2:#0077b6;
+    --success:#198754;
+    --danger:#d9534f;
+    --radius:12px;
+    --shadow: 0 8px 30px rgba(24,39,75,0.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:#111;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:28px;
+  }
+  .wrap{max-width:1200px;margin:0 auto}
+  header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px}
+  header .brand{display:flex;gap:14px;align-items:center}
+  .logo{
+    width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(0,82,204,0.14)
+  }
+  header h1{font-size:20px;margin:0}
+  header p{margin:0;color:var(--muted);font-size:13px}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+  .search-row{display:grid;grid-template-columns:1fr 1fr 320px;gap:14px;align-items:end}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  select,input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid #e6eefb;background:#fff}
+  .btn{background:var(--accent);color:#fff;border:none;padding:11px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(5,82,204,0.12)}
+  .btn:active{transform:translateY(1px)}
+  .controls{display:flex;gap:8px;align-items:center}
+  /* results & layout */
+  .main-grid{display:grid;grid-template-columns: 1fr 420px;gap:22px;margin-top:18px}
+  @media (max-width:980px){.search-row{grid-template-columns:1fr;grid-auto-rows:auto}.main-grid{grid-template-columns:1fr}}
+  .flights-list{display:flex;flex-direction:column;gap:12px}
+  .flight-card{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #f0f4fb;background:linear-gradient(180deg,#fff,#fbfdff);transition:transform .18s,box-shadow .18s;cursor:pointer}
+  .flight-card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(8,42,84,0.06)}
+  .flight-left{display:flex;gap:12px;align-items:center}
+  .air-logo{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#f9fafb;border:1px solid #eef4ff}
+  .airline-name{font-weight:700;color:var(--accent)}
+  .route{color:var(--muted);font-size:13px}
+  .price{font-weight:800;color:#0b4da0}
+  .view-seats{background:#ff6b6b;border:none;color:#fff;padding:10px 12px;border-radius:8px;font-weight:700;cursor:pointer}
+  /* right panel - seat map & summary */
+  .right-panel{position:relative;display:flex;flex-direction:column;gap:12px}
+  .seat-panel{padding:14px;border-radius:10px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #eef4ff}
+  .legend{display:flex;gap:12px;align-items:center;font-size:14px;color:var(--muted)}
+  .legend .dot{width:16px;height:16px;border-radius:4px;display:inline-block;margin-right:8px}
+  .seatmap-wrap{margin-top:12px;display:flex;flex-direction:column;gap:10px;align-items:center}
+  .seats-grid{display:grid;grid-template-columns:repeat(7,46px);gap:8px;align-items:center;justify-content:center;padding:8px}
+  .seat{width:46px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;user-select:none;box-shadow:0 2px 6px rgba(10,20,40,0.04);transition:transform .12s,opacity .12s}
+  .seat:hover{transform:translateY(-4px)}
+  .seat.booked{background:#e6e9ee;color:#8b9099;cursor:not-allowed;transform:none;opacity:0.9}
+  .seat.economy{background:linear-gradient(180deg,#dff5e6,#a8d5a2);color:#0b4d0d}
+  .seat.extra{background:linear-gradient(180deg,#fff3d9,#ffd27a);color:#6a3f00}
+  .seat.first{background:linear-gradient(180deg,#e7f0ff,#bcd6ff);color:#05316b}
+  .seat.selected{background:linear-gradient(180deg,#2b8cff,#0b5bd6);color:#fff;box-shadow:0 8px 20px rgba(11,91,214,0.18)}
+  .aisle{width:46px;height:40px;visibility:hidden}
+  .summary{margin-top:12px;padding:12px;border-radius:10px;background:#fff;border:1px solid #eef4ff;display:flex;justify-content:space-between;align-items:center}
+  .summary .left{display:flex;flex-direction:column}
+  .summary .left small{color:var(--muted)}
+  .confirm-btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:12px 18px;border-radius:10px;border:none;font-weight:800;cursor:pointer}
+
+  footer{margin-top:18px;text-align:center;color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">FL</div>
+        <div>
+          <h1>Flight Seat Booking </h1>
+          <p>select route, choose flight & seats</p>
+        </div>
+      </div>
+      <div style="text-align:right;color:var(--muted)"> Client-side </div>
+    </header>
+    <div class="card">
+      <div class="search-row">
+        <div>
+          <label>From</label>
+          <select id="fromCity"></select>
+        </div>
+        <div>
+          <label>To</label>
+          <select id="toCity"></select>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;gap:8px">
+            <button class="btn" onclick="searchFlights()">Search Flights</button>
+            <button class="btn" style="background:#0b9d58" onclick="resetAll()">Reset</button>
+          </div>
+          <small style="color:var(--muted)">Tip: choose example cities like Chennai → Hyderabad or Paris → London</small>
+        </div>
+      </div>
+      <div class="main-grid">
+        <div>
+          <h3 style="margin-top:18px;margin-bottom:12px;color:var(--accent)">Available flights</h3>
+          <div class="flights-list" id="flightsList">
+            <!-- flight cards inserted here -->
+          </div>
+        </div>
+        <div class="right-panel">
+          <div class="seat-panel card" id="seatPanel" style="display:none">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div id="selectedFlightTitle" style="font-weight:800;color:var(--accent)"></div>
+                <div style="color:var(--muted);font-size:13px" id="routeSubtitle"></div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:800;color:#0b4da0" id="pricePerSeat">₹0</div>
+                <div style="color:var(--muted);font-size:12px">per seat (est.)</div>
+              </div>
+            </div>
+            <div style="margin-top:12px">
+              <div class="legend">
+                <div><span class="dot" style="background:linear-gradient(180deg,#e7f0ff,#bcd6ff);width:18px;height:18px;border-radius:4px;display:inline-block"></span> First / Business</div>
+                <div><span class="dot" style="background:linear-gradient(180deg,#fff3d9,#ffd27a);width:18px;height:18px;border-radius:4px;display:inline-block"></span> Extra legroom</div>
+                <div><span class="dot" style="background:linear-gradient(180deg,#dff5e6,#a8d5a2);width:18px;height:18px;border-radius:4px;display:inline-block"></span> Economy</div>
+                <div><span class="dot" style="background:#e6e9ee;width:18px;height:18px;border-radius:4px;display:inline-block"></span> Unavailable</div>
+              </div>
+              <div class="seatmap-wrap">
+                <div id="seatsGrid" class="seats-grid"></div>
+              </div>
+            </div>
+            <div class="summary">
+              <div class="left">
+                <div style="font-weight:800" id="selectedSeatsLabel">No seats selected</div>
+                <small id="distanceLabel"></small>
+              </div>
+              <div style="text-align:right">
+                <div style="font-size:18px;font-weight:900">₹ <span id="totalPrice">0</span></div>
+                <button class="confirm-btn" onclick="confirmBooking()">Confirm & Book</button>
+
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding:14px">
+            <div style="font-weight:800;margin-bottom:8px">Quick facts</div>
+            <div style="color:var(--muted);font-size:14px;line-height:1.5">
+              • Demo uses real city coordinates to estimate distance.<br>
+              • Prices are illustrative and calculated client-side (distance × rate × airline factor).<br>
+              • Seat maps vary per airline: Air India uses the aisle/class layout you provided.<br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer>Made for course demo • All data client-side</footer>
+  </div>
+<script>
+const cities = {
+  "Chennai": {lat:13.0827, lon:80.2707},
+  "Bangalore": {lat:12.9716, lon:77.5946},
+  "Hyderabad": {lat:17.3850, lon:78.4867},
+  "Mumbai": {lat:19.0760, lon:72.8777},
+  "Delhi": {lat:28.6139, lon:77.2090},
+  "Paris": {lat:48.8566, lon:2.3522},
+  "London": {lat:51.5074, lon:-0.1278},
+  "New York": {lat:40.7128, lon:-74.0060},
+  "Doha": {lat:25.2854, lon:51.5310},
+  "Dubai": {lat:25.2048, lon:55.2708},
+  "Singapore": {lat:1.3521, lon:103.8198},
+  "Tokyo": {lat:35.6762, lon:139.6503},
+  "Sydney": {lat:-33.8688, lon:151.2093}
+};
+const airlines = {
+  "Air India": {
+    display:"Air India",
+    baseMultiplier: 1.08,
+    logoColor:"#b21f2d",
+    seatsLayout: {
+      rows: 10,
+      pattern: ['A','B','','C','D','E','F'] // aisle between B and C
+    },
+    classSplit: {firstRows:2, extraRows:2} // rows 1-2 first, 3-4 extra legroom, rest economy
+  },
+  "IndiGo": {
+    display:"IndiGo",
+    baseMultiplier: 0.95,
+    logoColor:"#0066cc",
+    seatsLayout:{rows:9, pattern: ['A','B','','C','D','E']},
+    classSplit: {firstRows:0, extraRows:1}
+  },
+  "SpiceJet": {
+    display:"SpiceJet",
+    baseMultiplier: 0.9,
+    logoColor:"#e63946",
+    seatsLayout:{rows:9, pattern: ['A','B','C','','D','E','F']},
+    classSplit: {firstRows:0, extraRows:1}
+  },
+  "Emirates": {
+    display:"Emirates",
+    baseMultiplier: 1.28,
+    logoColor:"#b41b1b",
+    seatsLayout:{rows:12, pattern: ['A','B','','C','D','E','F']},
+    classSplit: {firstRows:3, extraRows:2}
+  },
+  "Qatar Airways": {
+    display:"Qatar Airways",
+    baseMultiplier: 1.22,
+    logoColor:"#5b2b6f",
+    seatsLayout:{rows:12, pattern: ['A','B','','C','D','E','F']},
+    classSplit: {firstRows:3, extraRows:2}
+  }
+};
+const fromEl = document.getElementById('fromCity');
+const toEl = document.getElementById('toCity');
+Object.keys(cities).forEach(name => {
+  const o1 = document.createElement('option'); o1.value = name; o1.textContent = name;
+  const o2 = document.createElement('option'); o2.value = name; o2.textContent = name;
+  fromEl.appendChild(o1); toEl.appendChild(o2);
+});
+function toRad(v){ return v * Math.PI / 180; }
+function haversine(a,b){
+  const R = 6371; // km
+  const dLat = toRad(b.lat - a.lat);
+  const dLon = toRad(b.lon - a.lon);
+  const lat1 = toRad(a.lat), lat2 = toRad(b.lat);
+  const sinDlat = Math.sin(dLat/2), sinDlon = Math.sin(dLon/2);
+  const A = sinDlat*sinDlat + Math.cos(lat1)*Math.cos(lat2)*sinDlon*sinDlon;
+  const C = 2*Math.atan2(Math.sqrt(A), Math.sqrt(1-A));
+  return R * C;
+}
+const flightsListEl = document.getElementById('flightsList');
+const seatPanel = document.getElementById('seatPanel');
+const seatsGrid = document.getElementById('seatsGrid');
+const selectedFlightTitle = document.getElementById('selectedFlightTitle');
+const routeSubtitle = document.getElementById('routeSubtitle');
+const pricePerSeatEl = document.getElementById('pricePerSeat');
+const totalPriceEl = document.getElementById('totalPrice');
+const distanceLabel = document.getElementById('distanceLabel');
+const selectedSeatsLabel = document.getElementById('selectedSeatsLabel');
+let current = { airline:null, from:null, to:null, distanceKm:0, pricePerSeat:0 };
+let selectedSeats = [];
+/* deterministic pseudo-random generator for booked seats so it's stable per flight */
+function seededRandom(seed){
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < seed.length; i++) h = Math.imul(h ^ seed.charCodeAt(i), 16777619);
+  return function(){ h += 0x6D2B79F5; var t = Math.imul(h^h>>>15,1 | h); t ^= t + Math.imul(t ^ t>>>7, 61 | t); return ((t ^ t>>>14) >>> 0) / 4294967295; };
+}
+/* ---------------------------
+   Search flights
+   --------------------------- */
+function searchFlights(){
+  seatPanel.style.display='none';
+  flightsListEl.innerHTML='';
+
+  const from = fromEl.value;
+  const to = toEl.value;
+  if(!from || !to){ alert('Please select both From and To'); return; }
+  if(from === to){ alert('From and To cannot be the same'); return; }
+  // compute distance
+  const dist = haversine(cities[from], cities[to]);
+  // show available airlines (all for demo)
+  Object.keys(airlines).forEach(key => {
+    const airline = airlines[key];
+    const baseKmRate = 5.0; // INR per km baseline
+    const pricePerSeat = Math.round((dist * baseKmRate) * airline.baseMultiplier);
+    const card = document.createElement('div');
+    card.className = 'flight-card';
+    card.innerHTML = `
+      <div class="flight-left">
+        <div class="air-logo" style="background:${airline.logoColor};color:#fff;font-weight:800">${key.split(' ').map(x=>x[0]).slice(0,2).join('')}</div>
+        <div style="min-width:180px">
+          <div class="airline-name">${airline.display}</div>
+          <div class="route">${from} → ${to} • ${Math.round(dist)} km</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="price">₹${pricePerSeat}</div>
+        <button class="view-seats" onclick="openSeats('${encodeURIComponent(key)}','${encodeURIComponent(from)}','${encodeURIComponent(to)}')">View seats</button>
+      </div>
+    `;
+    flightsListEl.appendChild(card);
+  });
+}
+/* ---------------------------
+   Build seat map for selected flight
+   --------------------------- */
+function openSeats(airEnc, fromEnc, toEnc){
+  const airlineKey = decodeURIComponent(airEnc);
+  const from = decodeURIComponent(fromEnc);
+  const to = decodeURIComponent(toEnc);
+  const airline = airlines[airlineKey];
+  current.airline = airlineKey;
+  current.from = from;
+  current.to = to;
+  current.distanceKm = Math.round(haversine(cities[from], cities[to]));
+  // compute price per seat (INR): base rate per km × multiplier + small fixed convenience
+  const baseKmRate = 5.0; // INR per km
+  const basePrice = current.distanceKm * baseKmRate;
+  current.pricePerSeat = Math.round(basePrice * airline.baseMultiplier + 150); // +150 convenience
+  // update panel header
+  selectedFlightTitle.textContent = `${airline.display}`;
+  routeSubtitle.textContent = `${from} → ${to} • ${current.distanceKm} km`;
+  pricePerSeatEl.textContent = `₹ ${current.pricePerSeat}`;
+  distanceLabel.textContent = `Distance: ${current.distanceKm} km`;
+  // create deterministic booked seats using seeded RNG
+  const seed = airlineKey + '|' + from + '|' + to;
+  const rand = seededRandom(seed);
+  // generate seats
+  seatsGrid.innerHTML = '';
+  selectedSeats = [];
+  updateSummary();
+  const layout = airline.seatsLayout;
+  const rows = layout.rows;
+  const pattern = layout.pattern; // pattern length == columns (with '' where aisle)
+  const cols = pattern.length;
+  // make grid columns dynamic according to pattern
+  seatsGrid.style.gridTemplateColumns = `repeat(${cols},46px)`;
+  for(let r=1;r<=rows;r++){
+    for(let c=0;c<cols;c++){
+      const code = pattern[c];
+      if(code === ''){
+        const aisle = document.createElement('div'); aisle.className='aisle'; seatsGrid.appendChild(aisle); continue;
+      }
+      const seatEl = document.createElement('div');
+      seatEl.className = 'seat';
+      const seatLabel = code + r;
+      seatEl.textContent = seatLabel;
+      seatEl.dataset.seat = seatLabel;
+      // decide class (first/extra/economy)
+      let cls = 'economy';
+      if(r <= (airline.classSplit.firstRows || 0)) cls = 'first';
+      else if(r <= (airline.classSplit.firstRows || 0) + (airline.classSplit.extraRows || 0)) cls = 'extra';
+      seatEl.classList.add(cls);
+
+      // make some seats booked deterministically
+      const p = rand();
+      if(p < 0.14){ seatEl.classList.remove('economy','extra','first'); seatEl.classList.add('booked'); }
+      else {
+        seatEl.addEventListener('click', ()=>toggleSeat(seatEl));
+      }
+      seatsGrid.appendChild(seatEl);
+    }
+  }
+  // show panel
+  seatPanel.style.display='block';
+}
+/* ---------------------------
+   Seat selection & price calc
+   --------------------------- */
+function toggleSeat(el){
+  if(el.classList.contains('booked')) return;
+  const s = el.dataset.seat;
+  if(el.classList.contains('selected')){
+    el.classList.remove('selected');
+    selectedSeats = selectedSeats.filter(x=>x!==s);
+  } else {
+    el.classList.add('selected');
+    selectedSeats.push(s);
+  }
+  updateSummary();
+}
+
+function updateSummary(){
+  selectedSeatsLabel.textContent = selectedSeats.length ? `Selected: ${selectedSeats.join(', ')}` : 'No seats selected';
+  const total = selectedSeats.length * (current.pricePerSeat || 0);
+  totalPriceEl.textContent = total;
+}
+/* ---------------------------
+   Confirm booking (demo)
+   --------------------------- */
+function confirmBooking(){
+  if(!current.airline){ alert('Choose a flight first'); return; }
+  if(selectedSeats.length===0){ alert('Select at least one seat'); return; }
+  const msg = `Booking confirmed (demo)\nAirline: ${current.airline}\nRoute: ${current.from} → ${current.to}\nSeats: ${selectedSeats.join(', ')}\nTotal: ₹${selectedSeats.length * current.pricePerSeat}\nDistance: ${current.distanceKm} km`;
+  alert(msg);
+}
+/* ---------------------------
+   Reset
+   --------------------------- */
+function resetAll(){
+  fromEl.selectedIndex = 0; toEl.selectedIndex = 0;
+  flightsListEl.innerHTML = '';
+  seatPanel.style.display = 'none';
+}
+/* quick helper: open sample when page loads (optional) */
+window.addEventListener('load', ()=> {
+  // prefill example
+  fromEl.value='Chennai'; toEl.value='Hyderabad';
+  // you can auto-search or wait for user:
+  // searchFlights();
+});
+</script>
+</body>
+</html>

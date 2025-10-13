@@ -1,0 +1,164 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page</title>
+  <style>
+    body {
+      font-family: 'times new roman';
+      background: linear-gradient(135deg, #e9f0ff, #f9fbff);
+      margin: 0;
+      padding: 40px;
+    }
+    .card {
+      max-width: 520px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+      margin-bottom: 25px;
+      color: #002366;
+      text-align: center;
+    }
+    .option {
+      padding: 16px;
+      margin-bottom: 12px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .option:hover { background: #f3f8ff; }
+    .selected { border: 2px solid #0047b3; background: #eef4ff; }
+    .total {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin: 25px 0;
+      text-align: center;
+      color: #333;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      font-size: 1rem;
+      background: #0047b3;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover { background: #003399; }
+    .method-form {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      background: #f9fbff;
+      border-radius: 10px;
+      border: 1px solid #e0e6f0;
+    }
+    .method-form input, .method-form select {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+    }
+    label { font-weight: bold; display: block; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>💳 Select Payment Method</h2>
+
+    <div class="option" onclick="selectMethod(this, 'upiForm')">📱 GPay / UPI</div>
+    <div id="upiForm" class="method-form">
+      <label>UPI ID</label>
+      <input type="text" id="upiId" placeholder="example@upi">
+      <label>UPI PIN</label>
+      <input type="password" id="upiPin" maxlength="6" placeholder="****">
+    </div>
+
+    <div class="option" onclick="selectMethod(this, 'bankForm')">🏦 Net Banking</div>
+    <div id="bankForm" class="method-form">
+      <label>Bank</label>
+      <select id="bankName">
+        <option value="">-- Select Bank --</option>
+        <option>SBI</option>
+        <option>ICICI</option>
+        <option>HDFC</option>
+        <option>Axis Bank</option>
+      </select>
+      <label>User ID</label>
+      <input type="text" id="bankUser" placeholder="Enter User ID">
+      <label>Password</label>
+      <input type="password" id="bankPass" placeholder="Enter Password">
+    </div>
+
+    <div class="option" onclick="selectMethod(this, 'cardForm')">💳 Debit / Credit Card</div>
+    <div id="cardForm" class="method-form">
+      <label>Card Number</label>
+      <input type="text" id="cardNumber" maxlength="16" placeholder="1234 5678 9012 3456">
+      <label>Expiry Date</label>
+      <input type="text" id="expiry" placeholder="MM/YY">
+      <label>CVV</label>
+      <input type="password" id="cvv" maxlength="3" placeholder="***">
+      <label>Cardholder Name</label>
+      <input type="text" id="cardName" placeholder="Name on Card">
+    </div>
+
+    <div class="total">Total Payable: <span id="payAmount">₹0</span></div>
+
+    <button onclick="confirmPayment()">✅ Confirm Payment</button>
+  </div>
+  
+
+<script>
+  // ✅ Get booking details from localStorage
+  const bookingData = JSON.parse(localStorage.getItem("bookingData")) || {};
+
+  // show payable amount
+  document.getElementById("payAmount").textContent = "₹" + (bookingData.total || 0);
+
+  let selected = null;
+  function selectMethod(el, formId) {
+  document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+  el.classList.add('selected');
+  selected = el.textContent.trim();
+
+  // hide all forms
+  document.querySelectorAll('.method-form').forEach(f => f.style.display = "none");
+  if (formId) document.getElementById(formId).style.display = "block";
+}
+
+
+function confirmPayment() {
+  if (!selected) {
+    alert("Please select a payment method");
+    return;
+  }
+
+  alert("✅ Payment Successful!\nMethod: " + selected + "\nAmount: ₹" + bookingData.total);
+
+  bookingData.paymentMethod = selected;
+  localStorage.setItem("bookingData", JSON.stringify(bookingData));
+
+  window.location.href = "confirmation.html";
+}
+
+  
+</script>
+
+
+</body>
+</html> 

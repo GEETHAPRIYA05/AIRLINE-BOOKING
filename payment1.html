@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Page</title>
+  <style>
+    body {
+      font-family: 'times,new,roman';
+      background: linear-gradient(135deg, #e3f2fd, #f9fbff);
+      padding: 30px;
+      font-size:large;
+    }
+
+    .payment-container {
+      max-width: 650px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1e3a8a;
+      margin-bottom: 20px;
+    }
+
+    .flight-details {
+      background: #f4f7fa;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .flight-details div {
+      margin: 6px 0;
+      font-size: 20px;
+    }
+
+    .payment-methods {
+      margin-bottom: 25px;
+    }
+
+    .payment-methods label {
+      display: block;
+      margin: 10px 0;
+      padding: 12px;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .payment-methods input {
+      margin-right: 10px;
+    }
+
+    .payment-methods label:hover {
+      background: #eef3ff;
+      border-color: #1e3a8a;
+    }
+
+    .payment-details {
+      display: none;
+      padding: 15px;
+      margin-top: 10px;
+      background: #f4f7fa;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    .payment-details input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .confirm-btn {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .confirm-btn:hover {
+      background: #1e40af;
+    }
+
+    .success-box {
+      text-align: center;
+      padding: 20px;
+      background: #e6f7e6;
+      border: 1px solid #6cc070;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .success-box h3 {
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <h2>Complete Your Payment</h2>
+
+    <!-- Flight Details -->
+    <div class="flight-details">
+      <div><strong>Airline:</strong> <span id="airline"></span></div>
+      <div><strong>Flight No:</strong> <span id="flightNo"></span></div>
+      <div><strong>Route:</strong> <span id="route"></span></div>
+      <div><strong>Time:</strong> <span id="time"></span></div>
+      <div><strong>Price:</strong> <span id="price"></span></div>
+    </div>
+
+    <!-- Payment Options -->
+    <div class="payment-methods">
+  <h3>Select Payment Method</h3>
+
+  <!-- GPay -->
+  <label>
+    <input type="radio" name="payment" value="GPay" onclick="showDetails('gpay')">
+    <!-- GPay Icon -->
+    <img src="https://animationvisarts.com/wp-content/uploads/2023/11/Frame-43-1.png" 
+       alt="" width="28" height="28" 
+       style="vertical-align:middle; margin-right:8px;">
+    GPay (Google Pay)
+  </label>
+
+  <!-- Bank Transfer -->
+  <label>
+    <input type="radio" name="payment" value="Bank" onclick="showDetails('bank')">
+    <!-- Bank Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:6px;">
+      <path d="M12 2 1 7v2h22V7L12 2zm0 2.18 7.6 3.41H4.4L12 4.18zM3 11v9h2v-9H3zm4 0v9h2v-9H7zm4 0v9h2v-9h-2zm4 0v9h2v-9h-2zm4 0v9h2v-9h-2zM2 22h20v-2H2v2z"/>
+    </svg>
+    Bank Transfer
+  </label>
+
+  <!-- Card Payment -->
+  <label>
+    <input type="radio" name="payment" value="Card" onclick="showDetails('card')">
+    <!-- Card Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:6px;">
+      <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 2v2H4V6h16zm0 12H4v-6h16v6z"/>
+    </svg>
+    Credit/Debit Card
+  </label>
+</div>
+
+
+    <!-- GPay -->
+    <div id="gpay" class="payment-details">
+      <h4>GPay Payment</h4>
+      <input type="text" id="upiId" placeholder="Enter your UPI ID (e.g. username@upi)">
+      <input type="password" id="upiPin" placeholder="Enter your UPI PIN" maxlength="6">
+    </div>
+
+    <!-- Bank -->
+<!-- Bank Transfer -->
+<div id="bank" class="payment-details" style="display:none;">
+  <h4>Bank Transfer</h4>
+
+  <label for="bankName">Bank Name</label>
+  <input type="text" id="bankName" placeholder="Enter Bank Name">
+
+  <label for="accountName">Account Holder Name</label>
+  <input type="text" id="accountName" placeholder="Enter Account Holder Name">
+
+  <label for="accountNo">Account Number</label>
+  <input type="text" id="accountNo" placeholder="Enter Account Number">
+
+  <label for="ifsc">IFSC Code</label>
+  <input type="text" id="ifsc" placeholder="Enter IFSC Code">
+
+  <label for="txnId">Transaction Reference ID</label>
+  <input type="text" id="txnId" placeholder="Enter Transaction/UTR ID">
+</div>
+
+
+    <!-- Card -->
+    <div id="card" class="payment-details">
+      <h4>Card Payment</h4>
+      <input type="text" placeholder="Card Number" maxlength="16">
+      <input type="text" placeholder="Expiry Date (MM/YY)">
+      <input type="password" placeholder="CVV" maxlength="3">
+    </div>
+
+    <!-- Confirm Button -->
+    <button class="confirm-btn" onclick="confirmBooking()">Confirm Booking</button>
+
+    <!-- Success Box -->
+    <div class="success-box" id="successBox">
+      <h3>✅ Booking Confirmed!</h3>
+      <p>Your flight has been successfully booked.</p>
+    </div>
+  </div>
+
+  <script>
+    // Fill flight details from URL
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById("airline").textContent = params.get("airline");
+    document.getElementById("flightNo").textContent = params.get("flightNo");
+    document.getElementById("route").textContent = params.get("route");
+    document.getElementById("time").textContent = params.get("time");
+    document.getElementById("price").textContent = params.get("price");
+
+    // Show payment details dynamically
+    function showDetails(method) {
+      document.querySelectorAll('.payment-details').forEach(div => {
+        div.style.display = "none";
+      });
+      document.getElementById(method).style.display = "block";
+    }
+
+    // Confirm booking
+    function confirmBooking() {
+      const method = document.querySelector('input[name="payment"]:checked');
+      if (!method) {
+        alert("⚠ Please select a payment method before confirming.");
+        return;
+      }
+
+      if (method.value === "GPay") {
+        const upiId = document.getElementById("upiId").value.trim();
+        const upiPin = document.getElementById("upiPin").value.trim();
+        if (!upiId || !upiPin) {
+          alert("⚠ Please enter your UPI ID and PIN.");
+          return;
+        }
+      }
+
+      document.getElementById("successBox").style.display = "block";
+    }
+  </script>
+</body>
+</html>

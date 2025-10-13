@@ -1,0 +1,182 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+body {
+   background: url("suitcase first page.jpg") no-repeat center center/cover;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+   position: relative;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+.logo img {
+  width: 40px;
+  margin-right: 10px;
+}
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+  color: #003f7f;
+}
+.nav {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  z-index: 1000;
+}
+.nav a {
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  color: #000;
+}
+.nav.active {
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+nav ul li a.search {
+  padding: 6px 16px;
+  border-radius: 20px;
+  background-color: #e6e6e6;
+}
+.nav a:hover {
+  color: red;
+}
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 80px 60px;
+}
+.hero-text {
+  max-width: 50%;
+}
+.hero-text h1 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+.hero-text .highlight {
+  color: #0044cc;
+  font-weight: bold;
+}
+.hero-text p {
+  margin-bottom: 30px;
+  color: black;
+  max-width: 400px;
+  font-size: 22px;
+}
+.booknow {
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+.booknow :hover {
+  background-color: green;
+}
+.hero-image img {
+  width: 500px;
+}
+/* =============================
+   Responsive Media Queries
+============================= */
+/* Large Tablets & Small Laptops (≤ 1024px) */
+@media (max-width: 1024px) {
+  header {
+    padding: 15px 40px;
+  }
+  .hero {
+    padding: 60px 40px;
+  }
+  .hero-text h1 {
+    font-size: 38px;
+  }
+  .hero-image img {
+    width: 400px;
+  }
+}
+/* Tablets (≤ 768px) */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px 30px;
+  }
+  .nav {
+    position: static;
+    transform: none;
+    margin-top: 10px;
+    gap: 15px;
+  }
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 20px;
+  }
+  .hero-text {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .hero-text h1 {
+    font-size: 32px;
+  }
+  .hero-text p {
+    font-size: 18px;
+    max-width: 100%;
+  }
+  .hero-image img {
+    width: 300px;
+  }
+}
+/* Mobile Phones (≤ 480px) */
+@media (max-width: 480px) {
+  header {
+    padding: 10px 20px;
+  }
+  .logo span {
+    font-size: 20px;
+  }
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .hero {
+    padding: 30px 15px;
+  }
+  .hero-text h1 {
+    font-size: 26px;
+  }
+  .hero-text p {
+    font-size: 16px;
+  }
+  .booknow {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  .hero-image img {
+    width: 220px;
+  }
+}

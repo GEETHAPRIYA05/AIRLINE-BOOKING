@@ -1,0 +1,556 @@
+<!doctype>
+<<body>
+    <div class="navbar">
+      <button class="login-button" onclick="togglePopup()">Login</button>
+    </div>
+  
+    <div class="popup" id="loginPopup">
+      <h4>Language</h4>
+      <div class="lang-grid">
+        <div class="lang-option lang-active">EN English</div>
+        <div class="lang-option">ES Español</div>
+        <div class="lang-option">ID Bahasa Indonesia</div>
+        <div class="lang-option">KO 한국어</div>
+        <div class="lang-option">PL Polski</div>
+        <div class="lang-option">SV Svenska</div>
+        <div class="lang-option">VI Tiếng Việt</div>
+        <div class="lang-option">TW 繁體中文</div>
+        <div class="lang-option">AR العربية</div>
+        <div class="lang-option">FA فارسی</div>
+        <div class="lang-option">IT Italiano</div>
+        <div class="lang-option">MS Bahasa Melayu</div>
+        <div class="lang-option">PT Português</div>
+        <div class="lang-option">TH ไทย</div>
+        <div class="lang-option">CN 简体中文</div>
+        <div class="lang-option">DE Deutsch</div>
+        <div class="lang-option">FR Français</div>
+        <div class="lang-option">JA 日本語</div>
+        <div class="lang-option">NL Nederlands</div>
+        <div class="lang-option">RU Русский</div>
+        <div class="lang-option">TR Türkçe</div>
+        <div class="lang-option">HK 繁體中文</div>
+      </div>
+    </div>
+  
+    <script>
+      function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      }
+  
+      document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('dropdown');
+        if (!e.target.closest('.lang-toggle') && !e.target.closest('.lang-dropdown')) {
+          dropdown.style.display = 'none';
+        }
+      });
+    </script>
+    <div class="currency-toggle" onclick="toggleCurrencyDropdown()">INR</div>
+  
+    <div class="currency-dropdown" id="currency-dropdown">
+      <h4>Devise</h4>
+      <div class="currency-grid">
+        <div class="currency-option currency-active">INR Roupie indienne</div>
+        <div class="currency-option">AED Dirham émirati</div>
+        <div class="currency-option">AOA Kwanza angolais</div>
+        <div class="currency-option">ARS Peso argentin</div>
+        <div class="currency-option">AUD Dollar australien</div>
+        <div class="currency-option">AZN Manat azerbaïdjanais</div>
+        <div class="currency-option">BDT Taka bangladais</div>
+        <div class="currency-option">BHD Dinar bahreïni</div>
+        <div class="currency-option">BRL Real brésilien</div>
+        <div class="currency-option">BWP Pula du Botswana</div>
+        <div class="currency-option">CAD Dollar canadien</div>
+        <div class="currency-option">CHF Franc suisse</div>
+        <div class="currency-option">CLP Peso chilien</div>
+        <div class="currency-option">CNY Yuan chinois</div>
+        <div class="currency-option">COP Peso colombien</div>
+        <div class="currency-option">DZD Dinar algérien</div>
+        <div class="currency-option">EGP Livre égyptienne</div>
+        <div class="currency-option">ETB Birr éthiopien</div>
+        <div class="currency-option">EUR Euro</div>
+        <div class="currency-option">GBP Livre britannique</div>
+        <div class="currency-option">GHS Cedi ghanéen</div>
+        <div class="currency-option">HKD Dollar de Hong Kong</div>
+        <div class="currency-option">IDR Roupie indonésienne</div>
+        <div class="currency-option">IQD Dinar irakien</div>
+        <div class="currency-option">IRR Rial iranien</div>
+        <div class="currency-option">JOD Dinar jordanien</div>
+        <div class="currency-option">JPY Yen japonais</div>
+        <div class="currency-option">KES Shilling du Kenya</div>
+        <div class="currency-option">KRW Won coréen</div>
+        <div class="currency-option">KWD Dinar koweïtien</div>
+        <div class="currency-option">LBP Livre libanaise</div>
+        <div class="currency-option">LKR Roupie de Sri Lanka</div>
+        <div class="currency-option">LYD Dinar libyen</div>
+        <div class="currency-option">MAD Dirham marocain</div>
+        <div class="currency-option">MOP Pataca macanaise</div>
+        <div class="currency-option">MUR Roupie mauricienne</div>
+        <div class="currency-option">MXN Peso mexicain</div>
+        <div class="currency-option">MYR Ringgit malais</div>
+        <div class="currency-option">MZN Metical mozambicain</div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+  
+    <script>
+      function toggleCurrencyDropdown() {
+        const dropdown = document.getElementById('currency-dropdown');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      }
+  
+      document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('currency-dropdown');
+        if (!e.target.closest('.currency-toggle') && !e.target.closest('.currency-dropdown')) {
+          dropdown.style.display = 'none';
+        }
+      });
+    </script>
+    <div class="hero-section">
+      <h1 style="text-align: center;">The best flight offers from anywhere, to everywhere</h1><br> <br>
+      <div class="search-panel">
+        <form>
+          <label><input type="radio" name="trip" checked> Return</label> <br>
+          <label><input type="radio" name="trip"> One way</label> <br>
+          <label><input type="radio" name="trip"> Multi-city</label><br> <br>
+          
+          <input type="text"style="text-align:large;" placeholder="From"> <br>
+          <input type="text" placeholder="To"> <br>
+          <input type="date"> <br>
+          <input type="date"> <br>
+          
+          <select>
+            <option>1 adult, Economy</option>
+          </select><br> <br>
+          
+          <label><input type="checkbox"> Add nearby airports</label>
+          <label><input type="checkbox"> Direct flights only</label>
+        </form>
+    </div>
+  </div>
+  </body>
+  </html>
+  
+
+
+
+  <!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+</div>
+</head>
+  <body>
+
+    <div class="navbar">
+      <div class="nav-right">
+        <div class="nav-item" id="currencySelector">
+          INR
+          <div class="dropdown" id="currencyDropdown">
+            <div>INR - ₹</div>
+            <div>USD - $</div>
+            <div>EUR - €</div>
+            <div>GBP - £</div>
+  <div>JPY - ¥</div>
+  <div>AUD - A$</div>
+  <div>CAD - C$</div>
+  <div>CHF - CHF</div>
+  <div>CNY - ¥</div>
+  <div>SGD - S$</div>
+  <div>HKD - HK$</div>
+  <div>NZD - NZ$</div>
+  <div>ZAR - R</div>
+  <div>SEK - kr</div>
+  <div>NOK - kr</div>
+  <div>DKK - kr</div>
+  <div>RUB - ₽</div>
+  <div>MXN - $</div>
+  <div>BRL - R$</div>
+  <div>IDR - Rp</div>
+  <div>KRW - ₩</div>
+  <div>TRY - ₺</div>
+  <div>THB - ฿</div>
+  <div>PLN - zł</div>
+  <div>TWD - NT$</div>
+  <div>MYR - RM</div>
+  <div>SAR - ﷼</div>
+  <div>AED - د.إ</div>
+  <div>ILS - ₪</div>
+  <div>ARS - $</div>
+  <div>CLP - $</div>
+  <div>COP - $</div>
+  <div>EGP - £</div>
+  <div>PKR - ₨</div>
+  <div>BDT - ৳</div>
+  <div>LKR - Rs</div>
+  <div>NGN - ₦</div>
+  <div>KES - KSh</div>
+  <div>VND - ₫</div>
+  <div>UAH - ₴</div>
+  <div>QAR - ﷼</div>
+  <div>KWD - د.ك</div>
+  <div>OMR - ﷼</div>
+  <div>BHD - .د.ب</div>
+
+          </div>
+        </div>
+  
+        <div class="nav-item" id="languageSelector">
+          EN
+          <div class="dropdown" id="languageDropdown">
+            <div>English (EN)</div>
+            <div>Hindi (HI)</div>
+            <div>Spanish (ES)</div>
+            <div>French (FR)</div>
+  <div>German (DE)</div>
+  <div>Chinese (ZH)</div>
+  <div>Japanese (JA)</div>
+  <div>Korean (KO)</div>
+  <div>Portuguese (PT)</div>
+  <div>Russian (RU)</div>
+  <div>Arabic (AR)</div>
+  <div>Bengali (BN)</div>
+  <div>Urdu (UR)</div>
+  <div>Turkish (TR)</div>
+  <div>Italian (IT)</div>
+  <div>Vietnamese (VI)</div>
+  <div>Thai (TH)</div>
+  <div>Indonesian (ID)</div>
+  <div>Malay (MS)</div>
+  <div>Persian (FA)</div>
+  <div>Polish (PL)</div>
+  <div>Ukrainian (UK)</div>
+  <div>Hebrew (HE)</div>
+  <div>Greek (EL)</div>
+  <div>Dutch (NL)</div>
+  <div>Swedish (SV)</div>
+  <div>Finnish (FI)</div>
+  <div>Danish (DA)</div>
+  <div>Norwegian (NO)</div>
+  <div>Hungarian (HU)</div>
+  <div>Czech (CS)</div>
+  <div>Romanian (RO)</div>
+  <div>Slovak (SK)</div>
+  <div>Bulgarian (BG)</div>
+  <div>Serbian (SR)</div>
+  <div>Croatian (HR)</div>
+  <div>Filipino (TL)</div>
+  <div>Swahili (SW)</div>
+  <div>Tamil (TA)</div>
+  <div>Telugu (TE)</div>
+  <div>Kannada (KN)</div>
+          </div>
+        </div>
+        <div class="nav-item" id="supportSelector">
+          Support
+          <div class="dropdown" id="supportDropdown">
+              <div>Help Center</div>
+              <div>Contact Us</div>
+              <div>FAQs</div>
+              <div>Live Chat</div>
+          </div>
+        </div>
+<div class="nav-item" id="loginSelector">
+  LOGIN
+  <div class="dropdown" id="loginDropdown">
+    <div class="login-box">
+      <h1>LOGIN</h1>
+      <form action=" " method="post">
+          User Name:<br>
+          <input type="text" name="name"><br>
+          Password:<br>
+          <input type="password" name="password"><br><br>
+          <input type="submit" value="login">
+      </form>
+  </div>
+</div>
+</div>
+    <script>
+      const currencySelector = document.getElementById('currencySelector');
+      const currencyDropdown = document.getElementById('currencyDropdown');
+      const languageSelector = document.getElementById('languageSelector');
+      const languageDropdown = document.getElementById('languageDropdown');
+      const supportSelector = document.getElementById('supportSelector');
+      const supportDropdown = document.getElementById('supportDropdown');
+      const loginSelector = document.getElementById('loginSelector');
+      const loginDropdown = document.getElementById('loginDropdown');
+  
+  
+      currencySelector.addEventListener('click', () => {
+        currencyDropdown.style.display = currencyDropdown.style.display === 'block' ? 'none' : 'block';
+      });
+  
+      languageSelector.addEventListener('click', () => {
+        languageDropdown.style.display = languageDropdown.style.display === 'block' ? 'none' : 'block';
+      });
+      supportSelector.addEventListener('click', () => {
+        supportDropdown.style.display = supportDropdown.style.display === 'block' ? 'none' : 'block';
+      });
+      loginSelector.addEventListener('click', () => {
+        loginDropdown.style.display = loginDropdown.style.display === 'block' ? 'none' : 'block';
+      });
+      
+  
+      window.addEventListener('click', (e) => {
+        if (!currencySelector.contains(e.target)) {
+          currencyDropdown.style.display = 'none';
+        }
+        if (!languageSelector.contains(e.target)) {
+          languageDropdown.style.display = 'none';
+        }
+        if (!supportSelector.contains(e.target)) {
+          supportDropdown.style.display = 'none';
+        }
+        if (!loginSelector.contains(e.target)) {
+          loginDropdown.style.display = 'none';
+        }
+       
+      });
+    </script>
+</div>
+</div>
+  
+    <div class="hero-section">
+      <div class="overlay">
+        <h1>Millions of cheap flights.One simple search</h1>
+        <h2>create a Multi-city route</h2>
+        <div class="search-panel">
+    <form>
+      <div>
+        <label><input type="radio" name="trip" checked> Return</label>
+        <label><input type="radio" name="trip"> One way</label>
+        <label><input type="radio" name="trip"> Multi-city</label>
+      </div>
+    
+      <input type="text" placeholder="From">
+      <button style="border-radius: 50%; border: 1px solid white; padding: 10px;">
+        ⇄
+      </button>
+      <input type="text" placeholder="To">
+      <input type="date">
+      <input type="date">
+      <select>
+        <option>1 adult, Economy</option>
+      </select>
+      <button class="search-btn">Search</button>
+      <div class="check-group">
+        <label><input type="checkbox"> Add nearby airports</label>
+        <label><input type="checkbox"> Direct flights only</label>
+      </div>
+    </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
+
+
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 20px;
+    color: black;
+    position: relative;
+    font-size: large;
+  }
+  
+  .nav-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 1rem 2rem;
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+    align-items: center;
+  }
+  
+  .nav-item {
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .nav-item:hover {
+    color: red;
+  }
+  
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    background-color: white;
+    color: black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    min-width: 180px;
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 100;
+  }
+  
+  .dropdown div {
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
+  .dropdown div:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .nav-item#currencySelector .dropdown {
+    right: 0;
+  }
+  
+  .nav-item#languageSelector .dropdown {
+    right: 0;
+  }
+  .nav-item#supportSelector .dropdown {
+    right: 0;
+  }
+  .nav-item#loginSelector .dropdown {
+    right: 0;
+  }
+  .con{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+  }
+  body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: #e4efe7;
+    height: 100vh;
+  }
+  .login-box{
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .login-box h1{
+  margin-bottom: 20px;
+  }
+  .login-box input[type="text"], .login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .login-box input[type="submit"] {
+    background: #4CAF50;
+    color: white;
+    padding: 10px;
+    width: 100vw;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .login-box input[type="submit"]:hover {
+    background: #718572;
+  }
+  icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .hero-section {
+    background: url("page 2 bc.jpg");
+    background-size: cover;
+    background-position: right center;
+    background-repeat: no-repeat;
+    height: 70%;
+    width: 80%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    background-origin: padding-box;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .overlay {
+    background-color: rgba(0, 0, 50, 0);
+    color: white;
+    padding-top: 80px; 
+    text-align: center;
+    width: 100%;
+  }
+  .search-panel {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    color: black;
+    max-width: 900px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+  }
+   .search-panel input[type="text"] {
+    width: 220px;       
+    padding: 12px 16px; 
+    font-size: 16px;    
+    border-radius: 8px;
+    margin: 8px 5px;
+  }
+   input[placeholder="From"],
+  input[placeholder="To"]
+         {
+    width: 250px;
+  }
+  .search-panel input[type="date"] {
+    width: 220px;       
+    padding: 12px 16px; 
+    font-size: 16px;    
+    border-radius: 8px;
+    margin: 8px 5px;
+  }
+    input["date"]
+  input["date"]
+  {
+    width: 250px;
+  }
+  .search-panel select {
+    width: 220px;       
+    padding: 12px 16px; 
+    font-size: 16px;    
+    border-radius: 8px;
+    margin: 8px 5px;
+  }
+  option{
+  width: 250px;
+  }
+  .search-btn {
+    background-color: #1E90FF; 
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 12px; 
+    cursor: pointer;
+    transition: 0.5s;
+  }
+  
+  
+  

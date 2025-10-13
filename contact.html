@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - SkyWings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    background: linear-gradient(to right, #a8edea, #fed6e3);
+      color:black;
+    }
+
+    .contact-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .contact-info, .contact-form {
+      flex: 1 1 45%;
+      padding: 20px;
+    }
+
+    .contact-info h2, .contact-form h2 {
+      margin-bottom: 20px;
+      font-size: 26px;
+      border-bottom: 2px solid #00bcd4;
+      display: inline-block;
+    }
+
+    .contact-info p {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .contact-info i {
+      margin-right: 10px;
+      color: #00bcd4;
+    }
+
+    .contact-form form input, .contact-form form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      background-color:WHITE;
+      border-radius: 1px solid black;
+      color:BLACK;
+      font-size: 16px;
+    }
+
+    .contact-form form textarea {
+      height: 120px;
+      resize: none;
+    }
+
+    .contact-form form button {
+      background-color: #00bcd4;
+      color: BLACK;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .contact-form form button:hover {
+      background-color: black;
+    }
+
+    @media (max-width: 768px) {
+      .contact-container {
+        flex-direction: column;
+      }
+
+      .contact-info, .contact-form {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="contact-container">
+    <div class="contact-info">
+      <h2>Contact Information</h2>
+      <p><i class="fas fa-phone"></i> +1 800 527 2258</p>
+      <p><i class="fas fa-envelope"></i> support@skywings.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> SkyWings Airlines, 55 Airport Road, Bangalore, </p>
+      <p><i class="fas fa-clock"></i> Mon - Sat: 8am - 8pm</p>
+    </div>
+
+    <div class="contact-form">
+      <h2>Send Us a Message</h2>
+      <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <input type="tel" placeholder="Your Phone Number" required>
+        <textarea placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

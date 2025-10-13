@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SkyWings — Flights</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --card:#ffffff;
+    --ink:#1f2937;
+    --muted:#6b7280;
+    --brand:#ff6d00;        /* Ixigo-like orange */
+    --brand-dark:#e75f00;
+    --accent:#2563eb;       /* blue chips */
+    --chip:#eef2ff;
+    --green:#159957;        /* refund pill */
+    --border:#e5e7eb;
+    --shadow:0 8px 24px rgba(16,24,40,.06);
+    --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+    font-family: 'times new roman';
+    font-size: large;
+    background:var(--bg);
+    color:var(--ink);
+    background: url('https://static.tripcdn.com/packages/flight/static-image-online/latest/flight_v2/h5/bg_flights_v2.png') 
+                no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+/* NAV */
+.nav{
+    position:sticky; top:0; z-index:10;
+    background:#fff; border-bottom:1px solid var(--border);
+    padding:14px 20px;
+}
+.nav-inner{
+    max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:16px;
+}
+.brand{font-weight:800; letter-spacing:.3px; font-size:20px}
+.route{margin-left:auto; font-weight:600; color:#111827}
+
+/* LAYOUT */
+.wrap{max-width:1200px; margin:18px auto; padding:0 16px; display:grid; grid-template-columns:280px 1fr; gap:18px}
+@media (max-width: 980px){
+  .wrap{grid-template-columns:1fr}
+}
+
+/* FILTERS */
+.filters{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:16px;
+    position:sticky; top:72px; height:fit-content;
+}
+.f-head{font-weight:700; margin-bottom:8px}
+.section{border-top:1px dashed var(--border); padding-top:14px; margin-top:14px}
+.section:first-of-type{border-top:0; padding-top:0; margin-top:0}
+.section h4{margin:0 0 10px 0; font-size:14px; color:#111827}
+.check{display:flex; gap:10px; margin:8px 0; font-size:14px; color:#334155}
+.range-row{display:flex; align-items:center; gap:10px}
+.price{font-weight:600; font-size:13px; color:#374151; padding:6px 10px; background:#f9fafb; border-radius:8px; border:1px solid var(--border)}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{
+    padding:8px 10px; border:1px solid var(--border); border-radius:999px; font-size:12px; color:#374151; background:#fff;
+    cursor:pointer; user-select:none;
+}
+.chip.active{background:var(--chip); border-color:#c7d2fe; color:#3730a3; font-weight:600}
+
+.airlines{display:grid; grid-template-columns:1fr 1fr; gap:6px}
+.reset{display:flex; justify-content:space-between; align-items:center; margin-top:10px}
+.btn-reset{
+    background:#fff; border:1px solid var(--border); padding:8px 10px; border-radius:10px; font-size:12px; cursor:pointer;
+}
+
+/* RESULTS */
+.results{display:flex; flex-direction:column; gap:14px}
+.card{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+}
+.row{
+    display:grid; grid-template-columns:1.1fr .9fr .9fr .9fr .7fr .7fr; align-items:center; gap:4px;
+    padding:14px 14px;
+}
+@media (max-width: 980px){
+  .row{grid-template-columns:1fr 1fr; gap:10px}
+}
+.split{border-top:1px solid var(--border)}
+.cell{display:flex; align-items:center; gap:8px; min-width:0}
+.air{display:flex; align-items:center; gap:10px}
+.logo{
+    width:38px; height:38px; border-radius:10px; display:grid; place-items:center; font-weight:800; font-size:13px;
+    color:#fff; background:#111827;
+}
+.air-name{font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.air-code{font-size:12px; color:var(--muted)}
+
+.time{font-size:20px; font-weight:800; letter-spacing:.2px}
+.city{font-size:12px; color:var(--muted)}
+.dur{font-weight:600; font-size:14px}
+.stops{font-size:12px; color:#6b7280}
+
+.refund-pill{
+    display:inline-flex; align-items:center; gap:6px; padding:4px 8px; background:#e8fff3; color:var(--green);
+    border:1px solid #b7f0d1; border-radius:999px; font-size:12px; font-weight:700; white-space:nowrap;
+}
+
+.price-col{display:flex; flex-direction:column; align-items:flex-end; gap:6px}
+.price{font-size:22px; font-weight:800}
+.tax{font-size:11px; color:#9ca3af}
+
+.btn-book{
+    background:var(--brand); color:#fff; border:none; border-radius:12px; padding:12px 16px;
+    font-weight:800; cursor:pointer; transition:.15s; box-shadow:0 6px 14px rgba(255,109,0,.25);
+}
+.btn-book:hover{background:var(--brand-dark)}
+
+/* OFFERS */
+.offers{
+    padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px; cursor:pointer;
+    background:#fffdfa;
+}
+.offers-title{font-weight:700; font-size:14px}
+.offers-sub{font-size:12px; color:#6b7280}
+.offer-badges{display:flex; gap:8px; flex-wrap:wrap}
+.badge{
+    font-size:11px; background:#fff; border:1px dashed #f59e0b; color:#92400e; padding:6px 8px; border-radius:8px;
+}
+.offer-panel{display:none; padding:12px 14px; background:#fff; border-top:1px dashed #fde68a}
+.offer-panel.open{display:block}
+.coupon{display:flex; align-items:center; gap:10px; font-size:13px; margin:8px 0}
+.coupon code{font-weight:800; background:#111827; color:#fff; padding:6px 8px; border-radius:8px}
+
+/* SORT BAR */
+.sortbar{display:flex; align-items:center; gap:8px; margin-bottom:10px}
+.sortbar .sort-btn{
+    background:#fff; border:1px solid var(--border); border-radius:10px; padding:8px 10px; font-size:12px; cursor:pointer;
+}
+.nores{
+    padding:30px; text-align:center; color:#6b7280; border:1px dashed var(--border); border-radius:12px; background:#fff;
+}
+
+/* ============================
+   Responsive Media Queries
+=============================== */
+
+/* Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  .nav-inner {flex-wrap: wrap; gap: 10px;}
+  .brand {font-size: 18px;}
+  .route {font-size: 14px;}
+}
+
+/* Tablets & small laptops (≤768px) */
+@media (max-width: 768px) {
+  .wrap {grid-template-columns: 1fr;}
+  .filters {position: relative; top: auto; margin-bottom: 16px;}
+  .row {grid-template-columns: 1fr; text-align: center;}
+  .price-col {align-items: center;}
+  .btn-book {width: 100%;}
+  .offers {flex-direction: column; align-items: flex-start;}
+}
+
+/* Mobile phones (≤480px) */
+@media (max-width: 480px) {
+  body {font-size: 14px;}
+  .nav-inner {flex-direction: column; gap: 8px;}
+  .brand {font-size: 16px;}
+  .route {font-size: 12px;}
+  .filters {padding: 12px;}
+  .section h4 {font-size: 13px;}
+  .check {font-size: 12px;}
+  .row {padding: 10px;}
+  .time {font-size: 16px;}
+  .dur {font-size: 12px;}
+  .btn-book {padding: 10px; font-size: 14px;}
+}
+
+</style>
+</head>
+<body>
+
+<!-- TOP -->
+<div class="nav">
+  <div class="nav-inner">
+    <div class="brand">SkyWings</div>
+    <div id="currentRoute" class="route">Chennai → Paris • Today</div>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- FILTERS -->
+  <aside class="filters" id="filters">
+    <div class="f-head">Filters</div>
+
+    <div class="section">
+      <h4>Stops</h4>
+      <label class="check"><input type="checkbox" class="flt-stop" value="Non Stop" checked> Non Stop</label>
+      <label class="check"><input type="checkbox" class="flt-stop" value="1 Stop" checked> 1 Stop</label>
+      <label class="check"><input type="checkbox" class="flt-stop" value="2+ Stop" checked> 2+ Stop</label>
+    </div>
+
+    <div class="section">
+      <h4>Price</h4>
+      <div class="range-row">
+        <input type="range" id="priceRange" min="100" max="2000" step="10" value="1500" style="width:100%">
+      </div>
+      <div class="price" id="priceLabel">Up to $1500</div>
+    </div>
+
+    <div class="section">
+      <h4>Departure Time</h4>
+      <div class="chips" id="depChips">
+        <div class="chip active" data-range="0-6">00–06</div>
+        <div class="chip active" data-range="6-12">06–12</div>
+        <div class="chip active" data-range="12-18">12–18</div>
+        <div class="chip active" data-range="18-24">18–24</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h4>Airlines</h4>
+      <div class="airlines" id="airlinesBox">
+        <!-- filled by JS -->
+      </div>
+      <div class="reset">
+        <button class="btn-reset" id="resetFilters">Reset Filters</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RESULTS -->
+  <main>
+    <div class="sortbar">
+      <button class="sort-btn" data-sort="price">Sort by Price</button>
+      <button class="sort-btn" data-sort="duration">Sort by Duration</button>
+      <button class="sort-btn" data-sort="depart">Sort by Departure</button>
+    </div>
+    <section id="results" class="results"></section>
+    <div id="empty" class="nores" style="display:none;">No flights match your filters.</div>
+  </main>
+</div>
+
+<script>
+/* ----------------- DATA ----------------- */
+// Read route from query ?from=&to=
+const qs = new URLSearchParams(location.search);
+const fromCity = (qs.get('from') || "Chennai").trim();
+const toCity   = (qs.get('to')   || "Paris").trim();
+document.getElementById('currentRoute').textContent = `${fromCity} → ${toCity}`;
+
+const staticFlights = [
+  // Chennai → Paris
+  {from:"Chennai",to:"Paris",airline:"Air France",code:"AF-101",dep:"23:00",durMin:615,stops:"Non Stop",arr:"08:15",price:980,refund:true},
+  {from:"Chennai",to:"Paris",airline:"Emirates",code:"EK-500",dep:"02:45",durMin:750,stops:"1 Stop",arr:"15:15",price:1120,refund:true},
+  {from:"Chennai",to:"Paris",airline:"IndiGo",code:"6E-2726",dep:"09:10",durMin:845,stops:"2+ Stop",arr:"23:50",price:890,refund:false},
+
+  // Paris → London
+  {from:"Paris",to:"London",airline:"British Airways",code:"BA-204",dep:"08:00",durMin:80,stops:"Non Stop",arr:"09:20",price:150,refund:true,currency:"£"},
+  {from:"Paris",to:"London",airline:"Air France",code:"AF-212",dep:"11:15",durMin:85,stops:"Non Stop",arr:"12:40",price:165,refund:true,currency:"£"},
+
+  // Chennai → London
+  {from:"Chennai",to:"London",airline:"British Airways",code:"BA-304",dep:"06:30",durMin:660,stops:"Non Stop",arr:"13:30",price:1050,refund:true},
+  {from:"Chennai",to:"London",airline:"Emirates",code:"EK-510",dep:"04:50",durMin:795,stops:"1 Stop",arr:"14:05",price:980,refund:true},
+
+  // Bengaluru → Chennai (added)
+  {from:"Bengaluru",to:"Chennai",airline:"Air India Express",code:"IX-612",dep:"07:20",durMin:55,stops:"Non Stop",arr:"08:15",price:52,refund:false,currency:"$"},
+
+  // Paris → New York (added)
+  {from:"Paris",to:"New York",airline:"Delta",code:"DL-119",dep:"10:35",durMin:495,stops:"Non Stop",arr:"13:50",price:680,refund:true}
+];
+
+// For any route not in static list, generate random like Ixigo
+function randomFlights(from, to, n=8){
+  const airlines = [
+    ["Emirates","EK"],["Air France","AF"],["British Airways","BA"],
+    ["Qatar Airways","QR"],["Lufthansa","LH"],["Singapore Airlines","SQ"],
+    ["Etihad","EY"],["KLM","KL"],["Turkish Airlines","TK"],["IndiGo","6E"]
+  ];
+  const stops = ["Non Stop","1 Stop","2+ Stop"];
+  const out=[];
+  for(let i=0;i<n;i++){
+    const [name,pre]=airlines[Math.floor(Math.random()*airlines.length)];
+    const depH=String(Math.floor(Math.random()*24)).padStart(2,'0');
+    const depM=String(Math.floor(Math.random()*60)).padStart(2,'0');
+    const dur= 90 + Math.floor(Math.random()*900); // 1.5h to 15h in minutes
+    const arrMin = (parseInt(depH)*60 + parseInt(depM) + dur) % (24*60);
+    const arrH   = String(Math.floor(arrMin/60)).padStart(2,'0');
+    const arrMM  = String(arrMin%60).padStart(2,'0');
+    const price  = 100 + Math.floor(Math.random()*1400);
+
+    out.push({from,to,airline:name,code:`${pre}-${100+Math.floor(Math.random()*900)}`,dep:`${depH}:${depM}`,durMin:dur,
+      stops:stops[Math.floor(Math.random()*stops.length)],arr:`${arrH}:${arrMM}`,price,refund:Math.random()>0.4});
+  }
+  return out;
+}
+
+const datasetRoute = staticFlights.filter(f=>eq(f.from,fromCity)&&eq(f.to,toCity));
+const flights = datasetRoute.length ? datasetRoute : randomFlights(fromCity,toCity,10);
+
+/* ----------------- HELPERS ----------------- */
+function eq(a,b){return String(a).toLowerCase()===String(b).toLowerCase()}
+function minsToStr(m){const h=Math.floor(m/60), mm=m%60; return `${h}h ${String(mm).padStart(2,'0')}m`}
+function logoColor(name){
+  // stable hash -> HSL
+  let hash=0; for(let i=0;i<name.length;i++){hash=(hash*31 + name.charCodeAt(i))|0}
+  const hue = Math.abs(hash)%360;
+  return `hsl(${hue} 70% 42%)`;
+}
+function currencySym(f){ return f.currency || "$"; }
+
+/* ----------------- FILTER UI ----------------- */
+// Build airline checkboxes from available flights
+const airlinesBox=document.getElementById('airlinesBox');
+const uniqueAir=[...new Set(flights.map(f=>f.airline))].sort();
+uniqueAir.forEach(a=>{
+  const id = 'air-' + a.replace(/\s+/g,'-').toLowerCase();
+  const wrap = document.createElement('label'); wrap.className='check';
+  wrap.innerHTML = `<input type="checkbox" class="flt-airline" id="${id}" value="${a}" checked> ${a}`;
+  airlinesBox.appendChild(wrap);
+});
+
+// Stops, time chips, price
+const priceRange=document.getElementById('priceRange');
+const priceLabel=document.getElementById('priceLabel');
+priceLabel.textContent = `Up to $${priceRange.value}`;
+priceRange.addEventListener('input',()=>priceLabel.textContent=`Up to $${priceRange.value}`);
+
+document.getElementById('resetFilters').addEventListener('click',()=>{
+  document.querySelectorAll('.flt-stop,.flt-airline').forEach(cb=>cb.checked=true);
+  document.querySelectorAll('#depChips .chip').forEach(c=>c.classList.add('active'));
+  priceRange.value=1500; priceLabel.textContent=`Up to $${priceRange.value}`;
+  render();
+});
+
+document.querySelectorAll('#depChips .chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{chip.classList.toggle('active'); render();});
+});
+document.addEventListener('change',e=>{
+  if(e.target.matches('.flt-stop,.flt-airline,#priceRange')) render();
+});
+
+/* ----------------- SORT ----------------- */
+let sortKey = null;
+document.querySelectorAll('.sort-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    sortKey = b.dataset.sort;
+    render();
+  });
+});
+
+/* ----------------- RENDER ----------------- */
+const results=document.getElementById('results');
+const empty=document.getElementById('empty');
+
+function render(){
+  // gather filters
+  const allowedStops = new Set([...document.querySelectorAll('.flt-stop:checked')].map(i=>i.value));
+  const allowedAir   = new Set([...document.querySelectorAll('.flt-airline:checked')].map(i=>i.value));
+  const activeBuckets = [...document.querySelectorAll('#depChips .chip.active')].map(c=>c.dataset.range);
+  const maxPrice = +priceRange.value;
+
+  let list = flights.filter(f=>{
+    const depH = parseInt(f.dep.split(':')[0],10);
+    const bucket = depH<6?'0-6': depH<12?'6-12': depH<18?'12-18':'18-24';
+    return allowedStops.has(f.stops) &&
+           allowedAir.has(f.airline) &&
+           activeBuckets.includes(bucket) &&
+           f.price <= maxPrice;
+  });
+
+  // sort
+  if(sortKey==='price') list.sort((a,b)=>a.price-b.price);
+  else if(sortKey==='duration') list.sort((a,b)=>a.durMin-b.durMin);
+  else if(sortKey==='depart') list.sort((a,b)=>timeToMin(a.dep)-timeToMin(b.dep));
+
+  // paint
+  results.innerHTML='';
+  if(!list.length){ empty.style.display='block'; return; }
+  empty.style.display='none';
+
+  list.forEach(f=>{
+    const logoBg = logoColor(f.airline);
+    const durStr = minsToStr(f.durMin);
+    const priceTxt = `${currencySym(f)}${f.price}`;
+
+    const card = document.createElement('article');
+    card.className='card';
+    card.innerHTML = `
+      <div class="row">
+        <div class="cell air">
+          <div class="logo" style="background:${logoBg}">${initials(f.airline)}</div>
+          <div>
+            <div class="air-name">${f.airline}</div>
+            <div class="air-code">${f.code}</div>
+          </div>
+        </div>
+
+        <div class="cell">
+          <div>
+            <div class="time">${f.dep}</div>
+            <div class="city">${f.from}</div>
+          </div>
+        </div>
+
+        <div class="cell">
+          <div>
+            <div class="dur">${durStr}</div>
+            <div class="stops">${f.stops}</div>
+          </div>
+        </div>
+
+        <div class="cell">
+          <div>
+            <div class="time">${f.arr}</div>
+            <div class="city">${f.to}</div>
+          </div>
+        </div>
+
+        <div class="cell price-col">
+          <div class="price">${priceTxt}</div>
+          <div class="tax">incl. taxes & fees</div>
+          ${f.refund ? `<span class="refund-pill">✔ Refund on cancellation</span>` : ``}
+        </div>
+
+        <div class="cell" style="justify-content:flex-end">
+          <button class="btn-book">Book</button>
+
+
+        </div>
+      </div>
+
+      <div class="split"></div>
+
+      <div class="offers" role="button" aria-expanded="false">
+        <div>
+          <div class="offers-title">Offers & Discounts</div>
+          <div class="offers-sub">Bank cards, UPI & wallet offers available</div>
+        </div>
+        <div class="offer-badges">
+          <div class="badge">UPTO ₹1200 OFF</div>
+          <div class="badge">HDFC 10% OFF</div>
+          <div class="badge">WALLET CASHBACK</div>
+        </div>
+      </div>
+      <div class="offer-panel">
+        <div class="coupon">Use <code>FLYBIG</code> on prepaid to get up to ₹1200 off</div>
+        <div class="coupon">HDFC Credit EMI: 10% up to ₹1500 off</div>
+        <div class="coupon">PayTM Wallet: Flat ₹200 cashback</div>
+      </div>
+    `;
+    // Toggle offers
+    const toggler = card.querySelector('.offers');
+    const panel = card.querySelector('.offer-panel');
+    toggler.addEventListener('click', ()=>{
+      const open = panel.classList.toggle('open');
+      toggler.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+   // Book click → go to book1.html with flight data
+card.querySelector('.btn-book').addEventListener('click', (e)=>{
+  e.preventDefault();
+  const params = new URLSearchParams({
+    airline: f.airline,
+    route: `${f.from} → ${f.to}`,
+    dep: f.dep,
+    arr: f.arr,
+    code: f.code,
+    stops: f.stops,
+    duration: minsToStr(f.durMin),
+    price: String(f.price),
+    currency: currencySym(f)
+  });
+  window.location.href = `book1.html?${params.toString()}`;
+});
+
+
+    results.appendChild(card);
+  });
+}
+function timeToMin(t){const [h,m]=t.split(':').map(Number); return h*60+m;}
+function initials(name){
+  return name.split(' ').map(w=>w[0]).join('').slice(0,3).toUpperCase();
+}
+
+/* Init */
+render();
+</script>
+<script>
+  // Get URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const flight = urlParams.get('flight');
+  const price = urlParams.get('price');
+
+  // Fill booking details
+  if (flight) document.getElementById('flightName').textContent = flight;
+  if (price) {
+    document.getElementById('basePrice').textContent = price;
+    document.getElementById('totalPrice').textContent = price;
+    document.getElementById('hiddenPrice').value = price;
+  }
+</script>
+
+</body>
+</html>

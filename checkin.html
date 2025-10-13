@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flight Check-in — Demo</title>
+  <style>
+:root{
+  --primary:#0052cc;
+  --primary-hover:#003d99;
+  --secondary:#f4f6f8;
+  --text:#1a1a1a;
+  --muted:#6b7280;
+  --border:#d1d5db;
+  --radius:8px;
+}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+html, body{
+  height:100vh;
+  width:100vw;
+  margin:0;
+  padding:0;
+  overflow:hidden; /* no scrollbar */
+  font-family:"Times New Roman", Times, serif;
+  background:var(--secondary);
+  color:var(--text);
+  line-height:1.7;
+  font-size:1.05rem;
+}
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:10px 20px;
+}
+/* Staff Login Overlay */
+#loginOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Login Box */
+#loginBox {
+  background: linear-gradient(145deg, #ffffff, #f0f4ff);
+  padding: 30px 28px;
+  border-radius: 16px;
+  width: 340px;
+  text-align: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  animation: fadeInUp 0.6s ease;
+}
+#loginBox h2 {
+  margin-bottom: 18px;
+  color: #003d99;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+#loginBox input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ccd6f6;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+#loginBox input:focus {
+  border: 1px solid #0052cc;
+  box-shadow: 0 0 6px rgba(0, 82, 204, 0.4);
+}
+#loginBox button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #0052cc, #003d99);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+#loginBox button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #003d99, #002266);
+}
+#errorMsg {
+  color: #e60000;
+  display: none;
+  margin-top: 12px;
+  font-size: 13px;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+header{
+  text-align:center;
+  margin-bottom:20px;
+}
+header h1{
+  font-size:2rem;
+  font-weight:700;
+  margin-bottom:6px;
+  color:var(--primary);
+}
+header p{
+  color:var(--muted);
+  font-size:1rem;
+}
+.card{
+  background:#fff;
+  border-radius:var(--radius);
+  box-shadow:0 4px 15px rgba(0,0,0,0.05);
+  padding:20px;
+  flex:1;
+  overflow:hidden; /* keep fitted */
+}
+form.grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+  height:100%;
+}
+label{
+  font-weight:600;
+  font-size:0.95rem;
+  display:block;
+  margin-bottom:4px;
+  color:var(--text);
+}
+input,select{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  font-size:0.95rem;
+}
+input:focus,select:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 2px rgba(0,82,204,0.15);
+  outline:none;
+}
+.row{
+  display:flex;
+  gap:12px;
+}
+.passengers{
+  margin-top:12px;
+  padding:12px;
+  border:2px dashed var(--border);
+  border-radius:var(--radius);
+  background:var(--secondary);
+  flex:1;
+  overflow:auto;
+}
+.passenger{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:10px;
+}
+.btn{
+  background:var(--primary);
+  color:#fff;
+  padding:10px 16px;
+  font-weight:600;
+  border:none;
+  border-radius:var(--radius);
+  cursor:pointer;
+  font-size:0.9rem;
+}
+.btn:hover{ background:var(--primary-hover); }
+.btn.ghost{
+  background:transparent;
+  color:var(--primary);
+  border:1px solid var(--primary);
+}
+.btn.ghost:hover{
+  background:var(--primary);
+  color:#fff;
+}
+.bp{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.05);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  height:100%;
+}
+.boarding-pass{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  width:100%;
+  flex:1;
+}
+.bp .top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.bp .flight{
+  font-size:1.2rem;
+  font-weight:700;
+  color:var(--primary);
+}
+.bp small{ color:var(--muted); }
+.qr{
+  width:70px;
+  height:70px;
+  border-radius:6px;
+  background:#111;
+}
+.help{
+  font-size:0.8rem;
+  color:var(--muted);
+}
+footer{
+  text-align:center;
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-top:8px;
+}
+@media (max-width:900px){
+  form.grid{ grid-template-columns:1fr; }
+}
+  </style>
+</head>
+<body>
+  <body>
+  <!-- Login overlay -->
+  <div id="loginOverlay">
+    <div id="loginBox">
+      <h2>Staff Login</h2>
+      <input type="text" id="staffId" placeholder="Staff ID" />
+      <input type="password" id="staffPass" placeholder="Password" />
+      <button onclick="checkLogin()">Login</button>
+      <p id="errorMsg" style="color:red;display:none;margin-top:10px">Invalid ID or Password</p>
+    </div>
+  </div>
+  <!-- Hide actual check-in content until login -->
+  <div id="checkinContent" style="display:none">
+    <div class="container">
+      <header>
+        <div>
+          <h1>Flight Check-in</h1>
+        <p>Fill passenger details, choose seats and generate a boarding pass preview.</p>
+      </div>
+    </header>
+    <div class="card">
+      <form id="checkinForm" class="grid" autocomplete="off">
+        <section class="form-section">
+          <label for="pnr">Booking reference / PNR</label>
+          <input id="pnr" name="pnr" type="text" placeholder="e.g. ABC123" maxlength="8" required />
+          <div style="height:8px"></div>
+          <label for="lastname">Lead passenger last name</label>
+          <input id="lastname" name="lastname" type="text" placeholder="Family name on booking" required />
+          <div style="height:8px"></div>
+          <label for="flight">Flight number</label>
+          <input id="flight" name="flight" type="text" placeholder="e.g. AI101" />
+          <div style="height:8px"></div>
+          <div class="row">
+            <div>
+              <label for="date">Flight date</label>
+              <input id="date" name="date" type="date" />
+            </div>
+            <div>
+              <label for="class">Class</label>
+              <select id="class" name="class">
+                <option>Economy</option>
+                <option>Premium Economy</option>
+                <option>Business</option>
+                <option>First</option>
+              </select>
+            </div>
+          </div>
+          <div class="passengers" id="passengerList">
+            <strong style="display:block;margin-bottom:8px">Passengers</strong>
+            <!-- passenger rows inserted by JS -->
+          </div>
+          <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+            <button type="button" id="addPassenger" class="btn ghost">+ Add passenger</button>
+            <div class="help">Enter passenger full name and optional seat. You can add up to 6 passengers.</div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button type="submit" class="btn">Check in &amp; generate boarding pass</button>
+            <button type="button" id="saveLocal" class="btn ghost">Save locally</button>
+            <button type="button" id="clearLocal" class="btn ghost">Clear</button>
+          </div>
+        </section>
+        <aside class="form-section">
+          <div class="bp card">
+            <div class="boarding-pass" id="bpPreview">
+              <div class="top">
+                <div>
+                  <div class="flight" id="bpFlight">—</div>
+                  <small id="bpRoute">— to —</small>
+                </div>
+                <div class="qr" id="bpQr" aria-hidden="true"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;gap:12px;align-items:center">
+                <div>
+                  <div style="font-size:12px;color:var(--muted)">Passenger</div>
+                  <div id="bpName">—</div>
+                </div>
+                <div>
+                  <div style="font-size:12px;color:var(--muted)">Seat</div>
+                  <div id="bpSeat">—</div>
+                </div>
+                <div>
+                  <div style="font-size:12px;color:var(--muted)">Gate</div>
+                  <div id="bpGate">—</div>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:space-between;gap:6px;margin-top:10px">
+                <div style="font-size:12px;color:var(--muted)">PNR</div>
+                <div id="bpPnr">—</div>
+                <div style="font-size:12px;color:var(--muted)">Class</div>
+                <div id="bpClass">—</div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+                <small class="help">Boarding pass preview — not a real pass</small>
+                <div>
+                  <button type="button" id="downloadBtn" class="btn ghost">Download as PNG</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </form>
+    </div>
+    <footer>Demo flight check-in page · Client-side only · No data sent anywhere</footer>
+  </div>
+  <script>
+    // Small helper - sanitize user text for HTML insertion
+    function esc(s){return String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#39;")}
+
+    const passengerListEl = document.getElementById('passengerList');
+    const addPassengerBtn = document.getElementById('addPassenger');
+    let passengers = [];
+
+    // initialize with one passenger
+    function addPassenger(data={name:'',seat:''}){
+      if(passengers.length>=6) return alert('Maximum 6 passengers allowed');
+      const idx = passengers.length;
+      passengers.push(data);
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'passenger';
+      wrapper.dataset.index = idx;
+      wrapper.innerHTML = `
+        <input type="text" class="pname" placeholder="Full name" value="${esc(data.name)}" required />
+        <input type="text" class="pseat small" placeholder="Seat (e.g. 12A)" value="${esc(data.seat)}" />
+        <button type="button" class="btn ghost remove">Remove</button>
+      `;
+
+      passengerListEl.appendChild(wrapper);
+      wrapper.querySelector('.pname').addEventListener('input', e=>{
+        passengers[wrapper.dataset.index].name = e.target.value;
+        updatePreview();
+      });
+      wrapper.querySelector('.pseat').addEventListener('input', e=>{
+        passengers[wrapper.dataset.index].seat = e.target.value;
+        updatePreview();
+      });
+      wrapper.querySelector('.remove').addEventListener('click', ()=>{
+        passengers.splice(wrapper.dataset.index,1);
+        renderPassengers();
+        updatePreview();
+      });
+      updatePreview();
+    }
+    function renderPassengers(){
+      passengerListEl.innerHTML = '<strong style="display:block;margin-bottom:8px">Passengers</strong>';
+      const copy = [...passengers]; passengers = [];
+      copy.forEach(p=>addPassenger(p));
+    }
+    addPassengerBtn.addEventListener('click', ()=>addPassenger({name:'',seat:''}));
+    // Preview logic
+    function updatePreview(){
+      const pnr = document.getElementById('pnr').value.trim();
+      const flight = document.getElementById('flight').value.trim() || '—';
+      const cls = document.getElementById('class').value;
+      const date = document.getElementById('date').value;
+      const bpFlight = document.getElementById('bpFlight');
+      const bpRoute = document.getElementById('bpRoute');
+      const bpName = document.getElementById('bpName');
+      const bpSeat = document.getElementById('bpSeat');
+      const bpPnr = document.getElementById('bpPnr');
+      const bpClass = document.getElementById('bpClass');
+      const bpGate = document.getElementById('bpGate');
+      const bpQr = document.getElementById('bpQr');
+      bpFlight.textContent = esc(flight);
+      bpRoute.textContent = date? new Date(date).toLocaleDateString(): '—';
+      bpPnr.textContent = esc(pnr||'—');
+      bpClass.textContent = esc(cls);
+      const lead = passengers.length?passengers[0].name||'—':'—';
+      const seat = passengers.length?passengers[0].seat||'—':'—';
+      bpName.textContent = esc(lead);
+      bpSeat.textContent = esc(seat);
+      bpGate.textContent = passengers.length?randomGate(): '—';
+      // simple QR-like pattern: draw small squares using CSS grid inside the .qr element
+      if(bpQr.firstChild) bpQr.removeChild(bpQr.firstChild);
+      const grid = document.createElement('div');
+      grid.style.display='grid';
+      grid.style.gridTemplateColumns='repeat(6,10px)';
+      grid.style.gap='4px';
+      for(let i=0;i<36;i++){
+        const cell = document.createElement('div');
+        const v = ((pnr+flight+lead).length*13 + i*7) % 3 === 0;
+        cell.style.width='10px';cell.style.height='10px';cell.style.background=v?'#fff':'#111';
+        grid.appendChild(cell);
+      }
+      bpQr.appendChild(grid);
+    }
+    function randomGate(){
+      const letters='ABCD';
+      return letters[Math.floor(Math.random()*letters.length)] + (10 + Math.floor(Math.random()*30));
+    }
+    // Form submit: validate and show a small modal-like alert using boarding pass preview
+    document.getElementById('checkinForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      // Basic validation
+      const pnr = document.getElementById('pnr').value.trim();
+      const lastname = document.getElementById('lastname').value.trim();
+      if(!pnr || !lastname) return alert('Please enter PNR and lead passenger last name');
+      if(passengers.length===0) return alert('Add at least one passenger');
+      // ensure passenger names not empty
+      for(const p of passengers) if(!p.name.trim()) return alert('Every passenger must have a name');
+      // simulate success
+      updatePreview();
+      alert('Check-in completed! Boarding pass preview updated on the right. (This is a demo)');
+    });
+    // Save to localStorage
+    document.getElementById('saveLocal').addEventListener('click', ()=>{
+      const data = {
+        pnr: document.getElementById('pnr').value,
+        lastname: document.getElementById('lastname').value,
+        flight: document.getElementById('flight').value,
+        date: document.getElementById('date').value,
+        class: document.getElementById('class').value,
+        passengers
+      };
+      localStorage.setItem('flight-checkin-demo', JSON.stringify(data));
+      alert('Saved locally');
+    });
+    document.getElementById('clearLocal').addEventListener('click', ()=>{
+      if(confirm('Clear saved data and form?')){
+        localStorage.removeItem('flight-checkin-demo');
+        location.reload();
+      }
+    });
+    // load from localStorage automatically
+    window.addEventListener('load', ()=>{
+      const raw = localStorage.getItem('flight-checkin-demo');
+      if(raw){
+        try{
+          const d = JSON.parse(raw);
+          document.getElementById('pnr').value = d.pnr||'';
+          document.getElementById('lastname').value = d.lastname||'';
+          document.getElementById('flight').value = d.flight||'';
+          document.getElementById('date').value = d.date||'';
+          document.getElementById('class').value = d.class||'Economy';
+          if(Array.isArray(d.passengers) && d.passengers.length){
+            passengers = [];
+            d.passengers.slice(0,6).forEach(p=>passengers.push(p));
+            renderPassengers();
+          } else { addPassenger({name:'',seat:''}); }
+        }catch(err){ addPassenger({name:'',seat:''}); }
+      } else { addPassenger({name:'',seat:''}); }
+
+      // wire up preview triggers
+      ['pnr','flight','date','class'].forEach(id=>document.getElementById(id).addEventListener('input', updatePreview));
+      updatePreview();
+    });
+    // Download preview as PNG (uses HTML-to-canvas minimal; since no libs allowed, we make a simple SVG and convert)
+    document.getElementById('downloadBtn').addEventListener('click', ()=>{
+      const bp = document.getElementById('bpPreview');
+      const svg = `<?xml version="1.0" encoding="utf-8"?>
+        <svg xmlns='http://www.w3.org/2000/svg' width='600' height='320'>
+          <foreignObject width='600' height='320'>
+            <div xmlns='http://www.w3.org/1999/xhtml' style='font-family:Inter,Arial,sans-serif;padding:20px;background:#fff;color:#111'>${esc(bp.innerHTML)}</div>
+          </foreignObject>
+        </svg>`;
+      const img = new Image();
+      const svgBlob = new Blob([svg],{type:'image/svg+xml;charset=utf-8'});
+      const url = URL.createObjectURL(svgBlob);
+      img.onload = ()=>{
+        const canvas = document.createElement('canvas'); canvas.width=1200; canvas.height=640;
+        const ctx = canvas.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        URL.revokeObjectURL(url);
+        const a = document.createElement('a'); a.download = (document.getElementById('pnr').value||'boarding-pass') + '.png';
+        a.href = canvas.toDataURL('image/png'); a.click();
+      };
+      img.onerror = ()=>alert('Download failed in this browser');
+      img.src = url;
+    });
+  </script>
+  <script>
+  function checkLogin(){
+    const id = document.getElementById("staffId").value.trim();
+    const pass = document.getElementById("staffPass").value.trim();
+    // 🔑 Change these to your real staff credentials
+    const validId = "Geeth123";
+    const validPass = "Kirthii";
+    if(id === validId && pass === validPass){
+      document.getElementById("loginOverlay").style.display = "none";
+      document.getElementById("checkinContent").style.display = "block";
+    } else {
+      document.getElementById("errorMsg").style.display = "block";
+    }
+  }
+</script>
+</body>
+</html>

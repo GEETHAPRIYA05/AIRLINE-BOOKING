@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .search-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.05); /* transparent background */
+  padding: 15px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  margin: auto;
+}
+
+.search-row input,
+.search-row select,
+.search-row button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-row .swap-icon {
+  font-size: 18px;
+  padding: 0 5px;
+  color: #555;
+}
+
+.search-row button {
+  background-color: #00aaff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.search-row button:hover {
+  background-color: #008fcc;
+}
+        </style>
+    </head>
+    <body>
+        <div class="search-row">
+  <input type="text" placeholder="From">
+  <span class="swap-icon">⇄</span>
+  <input type="text" placeholder="To">
+  <input type="date">
+  <input type="date">
+  <select>
+    <option>1 adult, Economy</option>
+    <option>2 adults, Economy</option>
+    <option>1 adult, Business</option>
+  </select>
+  <button>Search</button>
+</div>
+    </body>
+</html>
