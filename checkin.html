@@ -243,6 +243,152 @@ footer{
 @media (max-width:900px){
   form.grid{ grid-template-columns:1fr; }
 }
+/* 📱 Universal mobile screens (portrait ≤480px) */
+@media only screen and (max-width: 480px) {
+  html, body {
+    font-size: 0.95rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .container {
+    padding: 10px;
+    height: auto;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  form.grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  label {
+    font-size: 0.9rem;
+  }
+
+  input, select {
+    font-size: 0.9rem;
+    padding: 9px;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .passengers {
+    padding: 10px;
+    border: 1.5px dashed var(--border);
+    background: #f9fafb;
+  }
+
+  .boarding-pass {
+    gap: 8px;
+  }
+
+  .bp .flight {
+    font-size: 1rem;
+  }
+
+  .qr {
+    width: 55px;
+    height: 55px;
+  }
+
+  footer {
+    font-size: 0.75rem;
+    margin-top: 20px;
+  }
+}
+
+/* 📲 Oppo A54 & similar mid-range phones (360–400px width) */
+@media only screen 
+  and (min-device-width: 360px) 
+  and (max-device-width: 400px) 
+  and (orientation: portrait) {
+
+  #loginBox {
+    width: 300px;
+    padding: 24px 20px;
+  }
+
+  #loginBox h2 {
+    font-size: 18px;
+  }
+
+  #loginBox input, #loginBox button {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .container {
+    padding: 8px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .btn {
+    padding: 8px 10px;
+  }
+
+  .bp {
+    padding: 10px;
+  }
+
+  header h1 {
+    font-size: 1.3rem;
+  }
+
+  header p {
+    font-size: 0.85rem;
+  }
+}
+
+/* 🔄 Landscape mobile view (rotate screen) */
+@media only screen and (max-width: 900px) and (orientation: landscape) {
+  html, body {
+    font-size: 0.9rem;
+  }
+
+  .container {
+    flex-direction: column;
+    padding: 8px;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  form.grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .boarding-pass {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .qr {
+    width: 60px;
+    height: 60px;
+  }
+}
+
   </style>
 </head>
 <body>

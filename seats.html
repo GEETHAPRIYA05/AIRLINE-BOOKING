@@ -163,7 +163,7 @@
         </div>
       </div>
     </div>
-    <footer>Made for course demo • All data client-side</footer>
+    <footer> All data client-side</footer>
   </div>
 <script>
 const cities = {
@@ -382,7 +382,7 @@ function updateSummary(){
 function confirmBooking(){
   if(!current.airline){ alert('Choose a flight first'); return; }
   if(selectedSeats.length===0){ alert('Select at least one seat'); return; }
-  const msg = `Booking confirmed (demo)\nAirline: ${current.airline}\nRoute: ${current.from} → ${current.to}\nSeats: ${selectedSeats.join(', ')}\nTotal: ₹${selectedSeats.length * current.pricePerSeat}\nDistance: ${current.distanceKm} km`;
+  const msg = `Booking confirmed \nAirline: ${current.airline}\nRoute: ${current.from} → ${current.to}\nSeats: ${selectedSeats.join(', ')}\nTotal: ₹${selectedSeats.length * current.pricePerSeat}\nDistance: ${current.distanceKm} km`;
   alert(msg);
 }
 /* ---------------------------

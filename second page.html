@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Skywinga</title>
+  <title>Skywings</title>
   <style>
     * {
   margin: 0;
@@ -222,6 +222,61 @@ body {
     padding: 10px;
   }
 }
+/* Oppo A54 and similar 6.5" 720x1600 phones */
+@media only screen 
+  and (min-device-width: 360px)
+  and (max-device-width: 400px)
+  and (orientation: portrait) {
+  
+  body {
+    background-position: top center;
+    background-size: cover;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .logo {
+    width: 120px;
+    margin: 10px auto;
+    position: static;
+  }
+
+  .right h1 {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .right p {
+    font-size: 14px;
+  }
+
+  .search-row {
+    flex-direction: column;
+    gap: 8px;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px 14px;
+    border-radius: 10px;
+    top: 0;
+  }
+
+  .search-row input,
+  .search-row select,
+  .search-row button {
+    width: 100%;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .search-row button {
+    background-color: #0077b6;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -337,7 +392,7 @@ body {
     <input type="date" id="return">
     <select id="passengers">
       <option>1 adult, Economy</option>
-      <option>2 adults, Economy</option>
+      <option>2 adults, Economy</option>  
       <option>1 adult, Business</option>
     </select>
     <button id="searchBtn">Search</button>
